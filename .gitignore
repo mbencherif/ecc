@@ -3,3 +3,7 @@
 *.aux
 *.log
 *.pdf
+*.out
+*.toc
+
+*.m~
