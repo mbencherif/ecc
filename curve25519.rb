@@ -53,7 +53,7 @@ module Curve25519
 		attr_reader :y
 
 		def initialize(x, y)
-			if !(x == 1 && y == 0)
+			if !(x == 0 && y == 1)
 				raise "Invalid Point" unless 
 					(Curve25519::B * y**2) % Curve25519::P == 
 						(x**3 + Curve25519::A * x**2 + x) % Curve25519::P
@@ -84,7 +84,12 @@ module Curve25519
 		end
 	end
 
-	Inf = Point.new(1, 0)
+	# homogenous form b*y^2*z = x^3 + a*x^2*z + x*z^2
+	# z = 0 -> x^3 = 0 -> x = 0
+	# => point at infinity is (0,1,0)
+	Inf = Point.new(0, 1)
+
+	# Base point specified by Bernstein
 	Base = Point.new(9, 14781619447589544791020593568409986887264606134616475288964881837755586237401)
 
 	def Curve25519.add(p1, p2)
