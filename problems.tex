@@ -4,6 +4,20 @@
 
 \begin{document}
 
+\section*{Discussion}
+I picked a selection of 10 problems from Silverman and Washington which I felt were the most relevant problems to my project. Washington provides a section on cryptography but only a single question about Diffie-Hellman (with many questions about outdated El-Gamal), which left me with a lack of questions related to cryptographic applications. Hopefully the coding aspect substitutes for that to some extent.
+
+Some of these questions are a bit long, so I'm not sure if I should complete them all (thoughts?).
+
+My thoughts on the order of completing the problems (grouped by most to least relevant):
+\begin{itemize}
+\item Silverman 1.2, 1.11, 1.12, 1.19
+\item Silverman 1.17, 1.18; Washington 2.5
+\item Silverman 1.14; Washington 2.17, 6.1
+\end{itemize}
+
+Progress has been made on Silverman 1.2 and 1.11.
+
 \section{Silverman 1.2}
 Let $C$ be the conic given by the equation
 $$F(x,y) = ax^2 + bxy + cy^2 + dx + ey + f = 0$$
@@ -16,6 +30,14 @@ d & e & 2f \\
 
 (a) Show that if $\delta \neq 0$ then $C$ has no singular points. That is, show there are no points $(x,y)$ where
 $$F(x,y) = \frac{\partial F}{\partial x}(x,y) = \frac{\partial F}{\partial y}(x,y) = 0$$
+
+In homogenous form we have:
+$$\bar F = ax^2 + bxy + cy^2 + dxz + eyz + fz^2$$
+$$\frac{\partial \bar F}{\partial x} = 2ax + by + dz$$
+$$\frac{\partial \bar F}{\partial y} = bx + 2cy + ez$$
+$$\frac{\partial \bar F}{\partial z} = dx + ey + 2fz$$
+
+$\delta \neq 0$ implies that the our matrix is invertible, i.e. that the only solution to $Ax = 0$ is $x = 0$. But there is no point $(0,0,0)$ in projective space. So $C$ has no singular points.
 
 (b) Conversely, show that if $\delta = 0$ and $b^2 - 4ac \neq 0$ then there is a unique singular point on $C$.
 
@@ -34,7 +56,40 @@ Fix an element $\mathcal{O} \in S$, and define a new composition law $+$ by the 
 
 (a) Prove that $+$ is commutative and has $\mathcal{O}$ as identity element.
 
+Let $P,Q \in S$. Then $P+Q = \mathcal{O} * (P * Q) = \mathcal{O} * (Q * P) = Q+P$ so $+$ is commutative.
+
+$P + \mathcal{O} = \mathcal{O} * (P * \mathcal{O}) = \mathcal{O} * (\mathcal{O} * P) = P$ so $\mathcal{O}$ is the identity.
+
 (b) Prove that for any given $P,Q \in S$, the equation $X+P = Q$ has the unique solution $X = P*(Q*\mathcal{O})$ in $S$. In particular, if we define $-P$ to be $P*(\mathcal{O} * \mathcal{O})$ then $-P$ is the unique solution in $S$ of the equation $X+P = \mathcal{O}$.
+
+Let $J, K, L \in S$. We have cancellation for $*$ as follows:
+
+\begin{align}
+J * K &= J * L\\
+J * (J * K) &= J * (J * L)\\
+K &= L
+\end{align}
+
+and cancellation works on both sides because $*$ commutes. Then
+
+\begin{align}
+X+P & = Q \\
+& = \mathcal{O} * (\mathcal{O} * Q) \\
+\mathcal{O} * (X * P) &= \mathcal{O} * (\mathcal{O} * Q) \\
+X * P &= \mathcal{O} * Q \\
+&= Q * \mathcal{O} \\
+&= P * (P * (Q * \mathcal{O})) \\
+&= (P * (Q * \mathcal{O})) * P \\
+X &= (P * (Q * \mathcal{O}))
+\end{align}.
+
+Finally
+
+\begin{align}
+X+P &= \mathcal{O}\\
+X &= (P * (\mathcal{O} * \mathcal{O}))\\
+X &= -P
+\end{align}.
 
 (c) Prove that $+$ is associative (ans so $(S,+)$ is a group) if and only if:
 
@@ -86,14 +141,14 @@ $$x(2P) = \frac{x^4 - 2bx^2 - 8cx - 4ac + b^2}{4y^2}$$
 Let $(x,y)$ be a point on the elliptic curve $E$ given by $y^2 = x^3 + Ax + B$. Show that if $y = 0$ then $3x^2 + A \neq 0$. 
 
 \section{Washington 2.17}
-(a) Show that $(x,y) → (x,−y)$ is a group homomorphism from E to itself, for any elliptic curve in Weierstrass form.
+(a) Show that $(x,y) \mapsto (x,−y)$ is a group homomorphism from E to itself, for any elliptic curve in Weierstrass form.
 
-(b) Show that $(x,y) → (\zeta x,−y)$, where $\zeta$ is a nontrivial cube root of 1, is an automorphism of the elliptic curve $y^2 = x^3 + B$.
+(b) Show that $(x,y) \mapsto (\zeta x,−y)$, where $\zeta$ is a nontrivial cube root of 1, is an automorphism of the elliptic curve $y^2 = x^3 + B$.
 
-(c) Show that $(x, y) → (−x, iy)$, is an automorphism of the elliptic curve $y^2 = x^3 + Ax$.
+(c) Show that $(x, y) \mapsto (−x, iy)$, is an automorphism of the elliptic curve $y^2 = x^3 + Ax$.
 
 \section{Washington 6.1}
-Let E be the curve $y^2 =x3+1$ over $F_q$, where $q \equiv 2 (\mod 3)$. By proposition 4.33, $E$ is supersingular. Let $\omega \in F_{q^2}$ be a primitive third root of unity. Note that $\omega \not \in F_q$ since the order of $F_q^\times$ is $q−1$, which is not a multiple of $3$.
+Let E be the curve $y^2 = x^3+1$ over $F_q$, where $q \equiv 2 \mod 3$. By proposition 4.33, $E$ is supersingular. Let $\omega \in F_{q^2}$ be a primitive third root of unity. Note that $\omega \not \in F_q$ since the order of $F_q^\times$ is $q−1$, which is not a multiple of $3$.
 
 Show that the map
 $$\beta: E(\bar F_q) \to E(\bar F_q), (x,y) \mapsto (\omega_3 x, y), \beta(\infty) = \infty$$
