@@ -1,0 +1,102 @@
+\documentclass{article}
+
+\usepackage{amsmath, amsfonts}
+
+\begin{document}
+
+\section{Silverman 1.2}
+Let $C$ be the conic given by the equation
+$$F(x,y) = ax^2 + bxy + cy^2 + dx + ey + f = 0$$
+and let $\delta$ be the determinant
+$$\det \begin{bmatrix}
+2a & b & d \\
+b & 2c & e \\
+d & e & 2f \\
+\end{bmatrix}$$
+
+(a) Show that if $\delta \neq 0$ then $C$ has no singular points. That is, show there are no points $(x,y)$ where
+$$F(x,y) = \frac{\partial F}{\partial x}(x,y) = \frac{\partial F}{\partial y}(x,y) = 0$$
+
+(b) Conversely, show that if $\delta = 0$ and $b^2 - 4ac \neq 0$ then there is a unique singular point on $C$.
+
+(c) Let $L$ be the line $y = \alpha x + \beta$ with $\alpha \neq 0$. Show that the intersection of $L$ and $C$ consists of either zero, one, or two points.
+
+(d) Determine the conditions on the coefficients which ensure that the intersection $L \cap C$ consists of exactly one point. What is the geometric significance of these conditions?
+
+\section{Silverman 1.11}
+Let $S$ be a set with a composition law $*$ satisfying the following two properties:
+
+(i) $P*Q = Q*P$ for all $P,Q \in S$
+
+(ii) $P*(P*Q) = Q$ for all $P,Q \in S$
+
+Fix an element $\mathcal{O} \in S$, and define a new composition law $+$ by the rule $P+Q = \mathcal{O} * (P * Q)$
+
+(a) Prove that $+$ is commutative and has $\mathcal{O}$ as identity element.
+
+(b) Prove that for any given $P,Q \in S$, the equation $X+P = Q$ has the unique solution $X = P*(Q*\mathcal{O})$ in $S$. In particular, if we define $-P$ to be $P*(\mathcal{O} * \mathcal{O})$ then $-P$ is the unique solution in $S$ of the equation $X+P = \mathcal{O}$.
+
+(c) Prove that $+$ is associative (ans so $(S,+)$ is a group) if and only if:
+
+(iii) $R*(\mathcal{O}*(P*Q)) = P*(\mathcal{O}*(Q*R))$ for all $P,Q,R \in S$
+
+(d) Let $\mathcal{O}' \in S$ be another point, and define a composition law $+'$ by $P +' Q = \mathcal{O}' * (P*Q)$. Suppose that both $+$ and $+'$ are associative, so we obtain two group structures $(S,+)$ and $(S,+')$ on $S$. Prove that the map $P \mapsto \mathcal{O}*(\mathcal{O}'*P)$ is a group isomorphism from $(S,+)$ to $(S,+')$.
+
+(e) Find a set $S$ with a composition law $*$ satisfying (i) and (ii) such that $(S,+)$ is not a group.
+
+\section{Silverman 1.12}
+The cubic curve $u^3 + v^3 = \alpha$ (with $\alpha \neq 0$) has a rational points $[1,-1,0]$ at infinity. Taking this rational point to be $\mathcal{O}$, we can make the points on the curve into a group.
+
+(a) Derive a formula for the sum $P_1 + P_2$ of two points $P_1 = (u_1, v_1)$ and $P_2 = (u_2, v_2)$.
+
+(b) Derive a duplication formula for $2P$ in terms of $P = (u,v)$.
+
+\section{Silverman 1.14}
+Let $C$ be the cubic curve $u^3 + v^3 = u+v+1$. In the projective plane this curve has a point $[1,-1,0]$ at infinity. Find rational functions $x = x(u,v)$ and $y=y(u,v)$ so that $x$ and $y$ satisfy a cubic equation in Weierstrass normal form with the given point still at infinity.
+
+\section{Silverman 1.17}
+Let $C$ be a cubic curve in the projective plane given by the homogenous equation 
+$$Y^2 Z = X^3 + aX^2 Z + bXZ^2 + cZ^3$$
+Verify that the point $[0,1,0]$ at infinity is a non-singular point of $C$.
+
+\section{Silverman 1.18}
+The cubic curve $y^2 = x^3 + 17$ has the following five rational points:
+$$P_1 = (-2,3), P_2 = (-1,4), P_3 = (2,5), P_4 = (4,9), P_5 = (8,23)$$
+
+(a) Show that $P_2$, $P_4$, and $P_5$ can each be expressed as $mP_1 + nP_3$ for an appropriate choice of integers $m$ and $n$.
+
+(b) Compute the points $P_6 = -P_1 + 2P_3$ and $P_7 = 3P_1 - P_3$.
+
+(c) Notice that the points $P_1$ to $P_7$ all have integer coordinates. There is exactly one more rational point on this curve which has integer coordinates and $y > 0$. Find that point.
+
+\section{Silverman 1.19}
+Suppose that $P = (x,y)$ is a point on the cubic curve
+$$y^2 = x^3 + ax^2 + bx + c$$
+
+(a) Verify that the $x$ coordinate of the point $2P$ is given by the duplication formula
+$$x(2P) = \frac{x^4 - 2bx^2 - 8cx - 4ac + b^2}{4y^2}$$
+
+(b) Derive the formula for the $y$ coordinate of $2P$ in terms of $x$ and $y$.
+
+(c) Find a polynomial in $x$ whose roots are the $x$ coordinates of the points $P=(x,y)$ satisfying $3P=\mathcal{O}$. (Hint: the relation $3P = \mathcal{O}$ can be written $2P = -P$.)
+
+(d) For the curve $y^2 = x^3 + 1$, solve the equation in (c) to find all of the points satisfying $3P = \mathcal{O}$.
+
+\section{Washington 2.5}
+Let $(x,y)$ be a point on the elliptic curve $E$ given by $y^2 = x^3 + Ax + B$. Show that if $y = 0$ then $3x^2 + A \neq 0$. 
+
+\section{Washington 2.17}
+(a) Show that $(x,y) → (x,−y)$ is a group homomorphism from E to itself, for any elliptic curve in Weierstrass form.
+
+(b) Show that $(x,y) → (\zeta x,−y)$, where $\zeta$ is a nontrivial cube root of 1, is an automorphism of the elliptic curve $y^2 = x^3 + B$.
+
+(c) Show that $(x, y) → (−x, iy)$, is an automorphism of the elliptic curve $y^2 = x^3 + Ax$.
+
+\section{Washington 6.1}
+Let E be the curve $y^2 =x3+1$ over $F_q$, where $q \equiv 2 (\mod 3)$. By proposition 4.33, $E$ is supersingular. Let $\omega \in F_{q^2}$ be a primitive third root of unity. Note that $\omega \not \in F_q$ since the order of $F_q^\times$ is $q−1$, which is not a multiple of $3$.
+
+Show that the map
+$$\beta: E(\bar F_q) \to E(\bar F_q), (x,y) \mapsto (\omega_3 x, y), \beta(\infty) = \infty$$
+is an isomorphism.
+
+\end{document}
