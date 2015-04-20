@@ -1,6 +1,6 @@
 \documentclass{article}
 
-\usepackage{graphicx, caption, subcaption, amsmath}
+\usepackage{graphicx, caption, subcaption, amsmath, amsfonts}
 
 \usepackage{hyperref}
 \hypersetup{
@@ -20,6 +20,8 @@
 }
 \makeatother
 
+\setcounter{tocdepth}{2}
+
 \begin{document}
 
 \title{A Gentle Introduction to Elliptic Curve Cryptography}
@@ -33,8 +35,6 @@
 \addcontentsline{toc}{section}{Foreword}
 
 \section{Elliptic Curves}
-
-\subsection{What is an Elliptic Curve?}
 An \textbf{elliptic curve} is a set of points satisfying an equation of the form
 $$y^2 = x^3 + ax + b$$
 for coefficients $a,b$ and variables $x,y$ in some field $F$ (of characteristic not 2 or 3). 
@@ -181,32 +181,76 @@ Follows from above formulas and closure of field F
 The line through points a,b is the same as the line through points b,a
 
 \subsubsection{Associativity}
-Is it worth proving associativity? I think it's not. The proof is quite long and involved. I think simply offering a reference is enough.
+Is it worth proving associativity? I think it's not.
+The proof is quite long and involved.
+I think simply offering a reference is enough.
 
 \subsection{Weierstrass Form and Acceptable Changes of Variables}
-Weierstrass Form is not the `only' form of an elliptic curve. We can use an acceptable changes of variables/biration equivalence to write other forms of elliptic curves.
+General form of a cubic curve.
+Weierstrass Form is not the `only' form of an elliptic curve. 
+We can use an acceptable changes of variables/biration equivalence to write other forms of elliptic curves.
 
 E.g. Montgomery Curve
 
 \clearpage
 
 \section{The Discrete Logarithm Problem}
+Given a group $G$ with operation $*$ we can define a map $\cdot: \mathbb{Z} \times G \to G$ by
+$$n\cdot g \mapsto \underbrace{g * g * \cdots * g}_{n\text{ times}}$$
+
+Let's first consider the case of $\mathbb{Z}_p^*$, the multiplicative group of integers mod $p$.
+In this case, our map $\cdot$ is equivalent to exponentiation.
+Let $a,b \in \mathbb{Z}_p^*$ and assume $\exists n \in \mathbb{Z}$ such that $a^n = b$.
+Over the real numbers, we call solving for $n$ finding a logarithm. Over $\mathbb{Z}_p^*$, $n$ is the \textit{discrete logarithm} of $b$ with respect to the base $a$.
+
+For an elliptic curve $C$, we also have a group structure. 
+In this case, the map $\cdot$ is equal to the repeated addition of a point to itself. 
+We can call this map \textit{point multiplication}.
+For a point $P$ on $C$, $nP = P + P + \cdots + P$.
+Again, there is an analogue to the logarithm.
+If we have two points $P,Q$ on $C$ where $nP = Q$, then $n$ is the \textit{elliptic-curve discrete logarithm} (ECDL) of $Q$ with respect to $P$.
 
 \subsection{Trap-Door Functions}
+Why do we bother defining such a simple operation?
+It turns out that this is the exact operation we will use to construct a cryptosystem.
+In fact, many modern cryptosystems are based on a class of operations called \textit{trap-door functions}.
+A trap-door function is a function that is simple to compute in one direction, but very costly to compute in the other direction.
+In the case of the ECDL, it is simple to compute a point multiplication, but hard to compute the logarithm.
 
 \subsection{Attacks on Discrete Logarithms}
+
+\subsubsection{Naive Multiplication}
+O(n)
+
+\subsubsection{Baby Step Giant Step}
+O(sqrt(n))
+
+\subsubsection{Pohlig-Hellman}
+How many methods should I write about? Is one enough to get the idea?
 
 \clearpage
 
 \section{Elliptic-Curve Diffie-Hellman Exchange}
 
 \subsection{The Diffie-Hellman Key Exchange}
+Introduction to public-key cryptography.
+Discussion of Diffie-Hellman and relation to ECDLP.
+Derivation of a session-key for encrypted communication using ECDHE.
 
 \subsection{Implementation Details of ECDH}
+Curve25519 details.
+Should I include Montgomery curve addition and doubling formulas?
+Should I include their derivation?
 
 \clearpage
 
 \begin{thebibliography}{9}
+
+\bibitem{curve25519}
+	Daniel J. Bernstein:
+	\emph{Curve 25519: new Diffie-Hellman speed records}.
+	Published \href{http://cr.yp.to/ecdh/curve25519-20060209.pdf}{online},
+	2006.
 
 \bibitem{ecc-guide}
 	Darrel Hankerson, Alfred J. Menezes, and Scott Vanstone:
