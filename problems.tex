@@ -91,20 +91,69 @@ X &= (P * (\mathcal{O} * \mathcal{O}))\\
 X &= -P
 \end{align}.
 
-(c) Prove that $+$ is associative (ans so $(S,+)$ is a group) if and only if:
+(c) Prove that $+$ is associative (and so $(S,+)$ is a group) if and only if:
 
 (iii) $R*(\mathcal{O}*(P*Q)) = P*(\mathcal{O}*(Q*R))$ for all $P,Q,R \in S$
+
+($\Leftarrow$) Let $P,Q,R \in S$ and assume (iii).
+
+\begin{align}
+P + (Q + R) &= P + (\mathcal{O} * (Q * R)) \\
+&= \mathcal{O} * (P * (\mathcal{O} * (Q * R))) \\
+&= \mathcal{O} * (R * (\mathcal{O} * (P * Q))) \\
+&= R + (\mathcal{O} * (P * Q)) \\
+&= R + (P + Q) \\
+&= (P + Q) + R
+\end{align}
+
+($\Rightarrow$) Let $P,Q,R \in S$ and assume $+$ is commutative.
+
+\begin{align}
+P + (Q + R) &= (P + Q) + R \\
+&= R + (P + Q) \\
+\mathcal{O} * (P * (\mathcal{O} * (Q * R))) &= \mathcal{O} * ( R * (\mathcal{O} * (P * Q))) \\
+P * (\mathcal{O} * (Q * R)) &= R * (\mathcal{O} * (P * Q))
+\end{align}
 
 (d) Let $\mathcal{O}' \in S$ be another point, and define a composition law $+'$ by $P +' Q = \mathcal{O}' * (P*Q)$. Suppose that both $+$ and $+'$ are associative, so we obtain two group structures $(S,+)$ and $(S,+')$ on $S$. Prove that the map $P \mapsto \mathcal{O}*(\mathcal{O}'*P)$ is a group isomorphism from $(S,+)$ to $(S,+')$.
 
 (e) Find a set $S$ with a composition law $*$ satisfying (i) and (ii) such that $(S,+)$ is not a group.
 
 \section{Silverman 1.12}
-The cubic curve $u^3 + v^3 = \alpha$ (with $\alpha \neq 0$) has a rational points $[1,-1,0]$ at infinity. Taking this rational point to be $\mathcal{O}$, we can make the points on the curve into a group.
+The cubic curve $u^3 + v^3 = \alpha$ (with $\alpha \neq 0$) has a rational point $[1,-1,0]$ at infinity. Taking this rational point to be $\mathcal{O}$, we can make the points on the curve into a group.
 
 (a) Derive a formula for the sum $P_1 + P_2$ of two points $P_1 = (u_1, v_1)$ and $P_2 = (u_2, v_2)$.
 
+Line between $P_1$ and $P_2$:
+$$m = \frac{v_2 - v_1}{u_2 - u_1}$$
+$$b = v_1 - mu_1$$
+$$v = mu + b$$
+
+Substitute:
+$$u^3 + (mu + b)^3 = \alpha$$
+$$u^3 + b^3 + 3b^2mu + 3bm^2u^2 + m^3u^3 - \alpha = 0$$
+$$(1+m^3) u^3 + 3bm^2 u^2 + 3b^2m u + b^3 - \alpha = 0$$
+$$u^3 + \frac{3bm^2}{1+m^3}u^2 + \frac{3b^2m}{1+m^3}u + \frac{b^3-\alpha}{1+m^3} = 0$$
+
+We know two roots:
+$$(u-u_1)(u-u_2)(u-u_3) = 0$$
+
+Coefficient of $u^2$ is $-u_1-u_2-u_3$, so:
+$$u_1 + u_2 + u_3 = -\frac{3bm^2}{1+m^3}$$
+
+Thus we have solved for the third point $(u_3,v_3)$:
+$$u_3 = - u_1 - u_2 - \frac{3bm^2}{1+m^3}$$
+$$v_3 = mu_3 + b$$
+
+The third point $P_3 = P_1 + P_2$ then has the coordinates $P_3 = (u_3, -v_3)$.
+
 (b) Derive a duplication formula for $2P$ in terms of $P = (u,v)$.
+
+We have by implicit differentation that:
+$$3u^2 - 3v^2 \frac{dv}{du} = 0$$
+$$m = \frac{dv}{du} = -\frac{u^2}{v^2}$$
+
+Then we can use the above formula with this slope to find the new point.
 
 \section{Silverman 1.14}
 Let $C$ be the cubic curve $u^3 + v^3 = u+v+1$. In the projective plane this curve has a point $[1,-1,0]$ at infinity. Find rational functions $x = x(u,v)$ and $y=y(u,v)$ so that $x$ and $y$ satisfy a cubic equation in Weierstrass normal form with the given point still at infinity.
