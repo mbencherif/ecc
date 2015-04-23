@@ -180,22 +180,55 @@ Figure \ref{fig:ec-plus} revisits the previous cases to show how this new operat
 \end{figure}
 
 \subsection{Deriving the Group Law}
-\textbf{Outline only}
+Now that we have defined the group operation geometrically, we can derive a formula for it.
+
+\subsubsection{Identity}
+Define $\infty$ to be the identity. For any point $P$ on $C$, $P+\infty = \infty + P = P$.
 
 \subsubsection{Addition}
-Math
+Let $P_1 = (x_1,y_1), P_2 = (x_2,y_2)$ on $C$ with $P_1 \neq P_2$.
+If $x_1 = x_2$, then the line is vertical and we define $P_3 = \infty$.
+Otherwise, the equation of the line through $P_1$ and $P_2$ has the form $y = mx + b$, where $m = \frac{y_2-y_1}{x_2-x_1}$ and $b = y_1 - mx_1$.
+Now substitute this into the equation of our curve to obtain
+$$(mx+b)^2 = x^3 + ax + b$$
+Expand and rewrite to get a cubic equation in $x$
+$$0 = x^3 - m^2x^2 + (a-2mb)x + b - b^2$$
+We know that this equation has three roots (of which we know two), so it must be equal to
+$$0 = (x-x_1)(x-x_2)(x-x_3)$$
+Multiplying out, we find that the coefficient of the $x^2$ term has the form $-x_1 - x_2 - x_3$. So $-m^2 = -x_1 - x_2 - x_3$, and we can solve for the third x-coordinate in terms of the first two points:
+$$x_3 = m^2 - x_1 - x_2$$
+Finally, the third point is reflected across the x-axis.
+To find the y-coordinate, we substitute our x-coordinate in to the equation of our line and negate it.
+$$y_3 = -(mx_3 + b)$$.
 
 \subsubsection{Doubling}
-Math
+Let $P_1$ on $C$.
+We defined the addition of a point with itself by taking the tangent line to that point on the curve.
+We can find the slope of the tangent line by implicit differentiation:
+\begin{align*}
+2y \frac{dy}{dx} &= 3x^2 + a \\
+\frac{dy}{dx} &= \frac{3x^2+a}{2y} \\
+m &= \frac{dy}{dx}(x_1,y_1) 
+\end{align*}
+Then we simply follow the same process for addition.
+\begin{align*}
+x_2 &= m^2 - 2x_1 \\
+y_2 &= -(mx_1 + b)
+\end{align*}
 
 \subsubsection{Inverses}
--(x,y) = (x,-y)
+Let $P=(x,y)$ on $C$. Define $-P = (x,-y)$.
+The line through $P$ and $-P$ is vertical, and hence intersects the curve at $P$, $-P$, and $\infty$.
+$\infty$ is a unique point on our curve, and has the special property that ``reflecting across the x-axis'' (negating the y-coordinate) returns $\infty$.
+So $P + (-P) = \infty$.
 
 \subsubsection{Closure}
-Follows from above formulas and closure of field F
+Now we have fully defined the group law for an elliptic curve.
+The closure of the set $\{\infty\} \cup \{(x,y) \mid x,y \in F \text{ and } y^2 = x^3 + ax + b\}$ follows from thi group law and the closure of the field $F$.
 
 \subsubsection{Commutativity}
-The line through points a,b is the same as the line through points b,a
+The group law is commutative because the line through two points is defined symmetrically.
+In other words, the line through points $A$ and $B$ is the same as the line through points $B$ and $A$.
 
 \subsubsection{Associativity}
 Is it worth proving associativity? I think it's not.
