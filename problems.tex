@@ -206,6 +206,18 @@ $$P_1 = (-2,3), P_2 = (-1,4), P_3 = (2,5), P_4 = (4,9), P_5 = (8,23)$$
 
 (a) Show that $P_2$, $P_4$, and $P_5$ can each be expressed as $mP_1 + nP_3$ for an appropriate choice of integers $m$ and $n$.
 
+We have the addition formula:
+\begin{align*}
+x_3 &= \frac{(y_2 - y_1)^2}{(x_2-x_1)^2} - x_1 - x_2 \\
+y_3 &= \frac{(2x_1 + x_2)(y_2-y_1)}{x_2-x_1} - \frac{(y_2-y_1)^3}{(x_2-x_1)^3} - y_1
+\end{align*}
+
+and doubling formula:
+\begin{align*}
+x_2 &= \frac{(3x_1^2 + a)^2}{(2y_1)^2} - 2x_1 \\
+y_2 &= \frac{3x_1(3x_1^2 + a)}{2y_1} - \frac{(3x_1^2+a)^3}{(2y_1)^3}-y_1
+\end{align*}
+
 (b) Compute the points $P_6 = -P_1 + 2P_3$ and $P_7 = 3P_1 - P_3$.
 
 (c) Notice that the points $P_1$ to $P_7$ all have integer coordinates. There is exactly one more rational point on this curve which has integer coordinates and $y > 0$. Find that point.
