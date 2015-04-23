@@ -64,15 +64,15 @@ $P + \mathcal{O} = \mathcal{O} * (P * \mathcal{O}) = \mathcal{O} * (\mathcal{O} 
 
 Let $J, K, L \in S$. We have cancellation for $*$ as follows:
 
-\begin{align}
+\begin{align*}
 J * K &= J * L\\
 J * (J * K) &= J * (J * L)\\
 K &= L
-\end{align}
+\end{align*}
 
 and cancellation works on both sides because $*$ commutes. Then
 
-\begin{align}
+\begin{align*}
 X+P & = Q \\
 & = \mathcal{O} * (\mathcal{O} * Q) \\
 \mathcal{O} * (X * P) &= \mathcal{O} * (\mathcal{O} * Q) \\
@@ -81,15 +81,15 @@ X * P &= \mathcal{O} * Q \\
 &= P * (P * (Q * \mathcal{O})) \\
 &= (P * (Q * \mathcal{O})) * P \\
 X &= (P * (Q * \mathcal{O}))
-\end{align}.
+\end{align*}.
 
 Finally
 
-\begin{align}
+\begin{align*}
 X+P &= \mathcal{O}\\
 X &= (P * (\mathcal{O} * \mathcal{O}))\\
 X &= -P
-\end{align}.
+\end{align*}.
 
 (c) Prove that $+$ is associative (and so $(S,+)$ is a group) if and only if:
 
@@ -97,25 +97,46 @@ X &= -P
 
 ($\Leftarrow$) Let $P,Q,R \in S$ and assume (iii).
 
-\begin{align}
+\begin{align*}
 P + (Q + R) &= P + (\mathcal{O} * (Q * R)) \\
 &= \mathcal{O} * (P * (\mathcal{O} * (Q * R))) \\
 &= \mathcal{O} * (R * (\mathcal{O} * (P * Q))) \\
 &= R + (\mathcal{O} * (P * Q)) \\
 &= R + (P + Q) \\
 &= (P + Q) + R
-\end{align}
+\end{align*}
 
 ($\Rightarrow$) Let $P,Q,R \in S$ and assume $+$ is commutative.
 
-\begin{align}
+\begin{align*}
 P + (Q + R) &= (P + Q) + R \\
 &= R + (P + Q) \\
 \mathcal{O} * (P * (\mathcal{O} * (Q * R))) &= \mathcal{O} * ( R * (\mathcal{O} * (P * Q))) \\
 P * (\mathcal{O} * (Q * R)) &= R * (\mathcal{O} * (P * Q))
-\end{align}
+\end{align*}
 
-(d) Let $\mathcal{O}' \in S$ be another point, and define a composition law $+'$ by $P +' Q = \mathcal{O}' * (P*Q)$. Suppose that both $+$ and $+'$ are associative, so we obtain two group structures $(S,+)$ and $(S,+')$ on $S$. Prove that the map $P \mapsto \mathcal{O}*(\mathcal{O}'*P)$ is a group isomorphism from $(S,+)$ to $(S,+')$.
+(d) Let $\mathcal{O}' \in S$ be another point, and define a composition law $+'$ by $P +' Q = \mathcal{O}' * (P*Q)$. Suppose that both $+$ and $+'$ are associative, so we obtain two group structures $(S,+)$ and $(S,+')$ on $S$. Prove that the map $\phi: P \mapsto \mathcal{O}*(\mathcal{O}'*P)$ is a group isomorphism from $(S,+)$ to $(S,+')$.
+
+\begin{align*}
+\phi(P+Q) &= \mathcal{O} * (\mathcal{O}' * (P + Q)) \\
+&= \mathcal{O}' + (P+Q) \\
+&= (\mathcal{O}'+P)+Q \\
+&= ((\mathcal{O}' +' \mathcal{O}')+P)+Q \\
+&= (\mathcal{O}' +' (\mathcal{O}'+P))+Q \\
+&= ((\mathcal{O}'+P) +' \mathcal{O}')) + Q \\
+&= (\mathcal{O}'+P) +' (\mathcal{O}' + Q) \\
+&= \phi(P) +' \phi(Q)
+\end{align*}
+So $\phi$ is a group homomorphism from $(S,+)$ to $(S,+')$.
+
+Let $\phi(P) = \mathcal{O}'$ for some $P \in S$.
+\begin{align*}
+\mathcal{O}' &= \phi(P) \\
+\mathcal{O}' &= \mathcal{O}' + P \\
+\mathcal{O}' + \mathcal{O} &= \mathcal{O}' + P \\
+\mathcal{O} &= P
+\end{align*}
+So $\ker\phi = \{\mathcal{O}\}$, and thus $\phi$ is an isomorphism.
 
 (e) Find a set $S$ with a composition law $*$ satisfying (i) and (ii) such that $(S,+)$ is not a group.
 
