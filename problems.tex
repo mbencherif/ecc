@@ -184,6 +184,22 @@ Let $C$ be a cubic curve in the projective plane given by the homogenous equatio
 $$Y^2 Z = X^3 + aX^2 Z + bXZ^2 + cZ^3$$
 Verify that the point $[0,1,0]$ at infinity is a non-singular point of $C$.
 
+Let $\hat F = X^3 + aX^2 Z + bXZ^2 + cZ^3 - Y^2Z$. We have the following partial derivatives:
+\begin{align*}
+\frac{\partial \bar F}{\partial x} &= 3Z^2 + 2aZX + bZ^2 \\
+\frac{\partial \bar F}{\partial y} &= 2ZY \\
+\frac{\partial \bar F}{\partial z} &= 3cZ^2 + 2bXZ + aX^2 - Y^2
+\end{align*}
+
+Evaluating at the point $[0,1,0]$ we find that
+\begin{align*}
+\frac{\partial \bar F}{\partial x} &= 0 \\
+\frac{\partial \bar F}{\partial y} &= 0 \\
+\frac{\partial \bar F}{\partial z} &= -1
+\end{align*}
+
+So $\frac{\partial \hat F}{\partial z} \neq 0$ and thus $[0,1,0]$ is non-singular.
+
 \section{Silverman 1.18}
 The cubic curve $y^2 = x^3 + 17$ has the following five rational points:
 $$P_1 = (-2,3), P_2 = (-1,4), P_3 = (2,5), P_4 = (4,9), P_5 = (8,23)$$
