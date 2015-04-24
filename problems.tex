@@ -206,21 +206,38 @@ $$P_1 = (-2,3), P_2 = (-1,4), P_3 = (2,5), P_4 = (4,9), P_5 = (8,23)$$
 
 (a) Show that $P_2$, $P_4$, and $P_5$ can each be expressed as $mP_1 + nP_3$ for an appropriate choice of integers $m$ and $n$.
 
-We have the addition formula:
-\begin{align*}
-x_3 &= \frac{(y_2 - y_1)^2}{(x_2-x_1)^2} - x_1 - x_2 \\
-y_3 &= \frac{(2x_1 + x_2)(y_2-y_1)}{x_2-x_1} - \frac{(y_2-y_1)^3}{(x_2-x_1)^3} - y_1
-\end{align*}
+Initially I wrote code to solve this problem. Then I realized that I needed to represent rational numbers exactly, and decided it would be simpler to do something else.
 
-and doubling formula:
+Using the Pari/GP software I found the following:
+\begin{verbatim}
+? e1=ellinit([0,0,0,0,17])
+? {
+for(m = -5, 5,
+  for(n = -5, 5,
+    print(m); print(n);
+    print(elladd(e1, ellmul(e1, [-2,3], m), ellmul(e1, [2,5], n)))
+  )
+)
+}
+\end{verbatim}
+
 \begin{align*}
-x_2 &= \frac{(3x_1^2 + a)^2}{(2y_1)^2} - 2x_1 \\
-y_2 &= \frac{3x_1(3x_1^2 + a)}{2y_1} - \frac{(3x_1^2+a)^3}{(2y_1)^3}-y_1
+P_2 &= -2P_1 + P_2 \\
+P_4 &= P_1 + -P_2 \\
+P_5 &= -2P_1 + 0P_2
 \end{align*}
 
 (b) Compute the points $P_6 = -P_1 + 2P_3$ and $P_7 = 3P_1 - P_3$.
+\begin{verbatim}
+? elladd(e1, ellmul(e1, [-2,3], -1), ellmul(e1, [2,5], 2))
+%6 = [43, 282]
+? elladd(e1, ellmul(e1, [-2,3], 3), ellmul(e1, [2,5], -1))
+%7 = [52, 375]
+\end{verbatim}
 
 (c) Notice that the points $P_1$ to $P_7$ all have integer coordinates. There is exactly one more rational point on this curve which has integer coordinates and $y > 0$. Find that point.
+
+From (a), I have the point $-4P_1 + 3P_3 = (5234, 378661)$.
 
 \section{Silverman 1.19}
 Suppose that $P = (x,y)$ is a point on the cubic curve
