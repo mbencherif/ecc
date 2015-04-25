@@ -1,6 +1,6 @@
 \documentclass{article}
 
-\usepackage{amsmath, amsfonts}
+\usepackage{amsmath, amsfonts, geometry}
 
 \begin{document}
 
@@ -356,6 +356,12 @@ $$\left(-i(2^\frac{2}{3}), \pm \sqrt{-i(2^\frac{2}{3}) + 1}\right),~\left(-(i^\f
 
 \section{Washington 2.5}
 Let $(x,y)$ be a point on the elliptic curve $E$ given by $y^2 = x^3 + Ax + B$. Show that if $y = 0$ then $3x^2 + A \neq 0$. 
+
+If $y = 0$ then $(x,y)$ on $E$ satisfies the following condition:
+$$0 = x^3 + Ax + B$$
+
+However, the point must be nonsingular. $\frac{\partial F}{\partial y} = 0$, so $\frac{\partial F}{\partial x}$ must be nonzero, or the point is singular. Thus
+$$\frac{\partial F}{\partial x} = 3x^2 + A \neq 0$$
 
 \section{Washington 2.17}
 (a) Show that $(x,y) \mapsto (x,−y)$ is a group homomorphism from E to itself, for any elliptic curve in Weierstrass form.
