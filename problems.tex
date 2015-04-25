@@ -38,61 +38,25 @@ $$\frac{\partial \bar F}{\partial z} = dx + ey + 2fz$$
 $\delta \neq 0$ implies that the our matrix is invertible, i.e. that the only solution to $Ax = 0$ is $x = 0$. But there is no point $(0,0,0)$ in projective space. So $C$ has no singular points.
 
 (b) Conversely, show that if $\delta = 0$ and $b^2 - 4ac \neq 0$ then there is a unique singular point on $C$.
-%8acf + 2bde - 2cd^2 - 2b^2f - 2ae^2
-%df/dx = ax + by + d = 0
-%df/dy = cy + bx + e = 0
-%
-%0 = ax^2 + dx + f
 
-$$\begin{vmatrix}
-2a & b & d \\
-b & 2c & e \\
-d & e & 2f \\
-\end{vmatrix}
-=
-2a \begin{vmatrix}
-2c & e \\
-e & 2f
-\end{vmatrix}
--b \begin{vmatrix}
-b & e \\
-d & 2f
-\end{vmatrix}
-+d \begin{vmatrix}
-b & 2c \\
-d & e
-\end{vmatrix}
-$$
-
-$$
-2a(4cf-e^2)-b(2bf-ed)+d(be-2cd)
-=
-8acf - 2ae^2 - 2b^2f + bde + bde - 2cd^2
-=
-8acf + 2bde - 2cd^2 - 2b^2f - 2ae^2
-$$
-
-$$
-d \begin{vmatrix}
-b & d \\
-2c & e
-\end{vmatrix}
--e \begin{vmatrix}
-2a & d \\
-b & e
-\end{vmatrix}
-+2f \begin{vmatrix}
-2a & b \\
-b & 2c
-\end{vmatrix}
-= d(be-2cd) - e(2ae-bd) + 2f(4ac-b^2)
-= bde - 2cd^2 - 2ae^2 + bde + 8acf - 2b^2f
-= 8acf + 2bde - 2cd^2 - 2ae^2 - 2b^2f
-$$
+If we have a degenerate conic ($\delta = 0$) then we can classify it on whether $J = b^2 - 4ac$ is greater, equal, or less than zero. If $b^2-4ac < 0$, then the conic is two intersecting lines, and has one singular point (the point of intersection). If $b^2 - 4ac > 0$ then the conic is a single singular point. See Dennis, \textit{A Catalog of Special Plane Curves} for a reference.
 
 (c) Let $L$ be the line $y = \alpha x + \beta$ with $\alpha \neq 0$. Show that the intersection of $L$ and $C$ consists of either zero, one, or two points.
 
+Substitute the equation of the line into the equation for the conic.
+
+\begin{align*}
+0 &= ax^2 + bx(\alpha x + \beta) + c(\alpha x + \beta)^2 + dx + e(\alpha x + \beta) + f \\
+&= ax^2 + \alpha b x^2 + \beta b x + \alpha^2 c x^2 + 2\alpha\beta c x + c\beta^2 + dx + \alpha e x + \beta e + f \\
+&= (a + \alpha b + \alpha^2 c)x^2 + (\beta b + 2\alpha\beta c + d + \alpha e)x + (c\beta^2 + \beta e + f) \\
+&= a'x^2 + b'x + c'
+\end{align*}
+
+In $\mathbb{R}$, this quadratic equation has zero, one, or two solutions depending on its coefficients.
+
 (d) Determine the conditions on the coefficients which ensure that the intersection $L \cap C$ consists of exactly one point. What is the geometric significance of these conditions?
+
+There is exactly one solution if $b'^2 - 4a'c' = 0$. In geometric terms, this line must be tangent to the curve.
 
 \section{Silverman 1.11}
 Let $S$ be a set with a composition law $*$ satisfying the following two properties:
