@@ -67,6 +67,14 @@ module Curve25519
 			return o.class == self.class && o.x == @x && o.y == @y
 		end
 
+		def -@
+			if self.infty?
+				return self
+			else
+				return Curve25519::Point.new(@x, -@y)
+			end
+		end
+
 		def infty?
 			return self == Curve25519::Inf
 		end
@@ -175,7 +183,7 @@ module ECDH
 			@keys = Hash.new
 
 			if secret
-				@secret % Curve25519::P
+				@secret = secret % Curve25519::P
 			else
 				secret = SecureRandom.random_bytes(32)
 
