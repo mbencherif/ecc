@@ -11,9 +11,9 @@ Some of these questions are a bit long, so I'm not sure if I should complete the
 
 My thoughts on the order of completing the problems (grouped by most to least relevant):
 \begin{itemize}
-\item Silverman 1.2, 1.11, 1.12, 1.19
-\item Silverman 1.17, 1.18; Washington 2.5
-\item Silverman 1.14; Washington 2.17, 6.1
+\item Silverman ~1.2, ~1.11, x1.12, x1.19
+\item Silverman x1.17, x1.18; Washington x2.5
+\item Silverman 1.14; Washington ~2.17, 6.1
 \end{itemize}
 
 \section{Silverman 1.2}
@@ -438,13 +438,6 @@ Thus $\psi(P_1+P_1) = \psi(P_1) + \psi(P_1)$.
 
 \begin{align*}
 \psi(P_1) + \psi(P_2) &= (\zeta x_1, -y_1) + (\zeta x_2, -y_2) \\
-&=
-\psi\left( 
-	\left(
-		\frac{(-y_2+y_1)^2}{( x_2 -  x_1)^2}- x_1-  x_2,
-		\frac{(2 x_1+ x_2)*(-y_2+y_1)}{(x_2-x_1)}-\frac{(-y_2+y_1)^3}{( x_2- x_1)^3}+y_1
-	\right)
-\right) \\
 &= \left(
 	\frac{(y_2-y_1)^2}{(\zeta x_2-\zeta x_1)^2}-\zeta x_1-\zeta x_2,
 	\frac{(y_2-y_1)^3}{(\zeta x_2-\zeta x_1)^3} - \frac{(2\zeta x_1+\zeta x_2)(y_2-y_1)}{(\zeta x_2-\zeta x_1)} + y_1
@@ -467,10 +460,10 @@ Thus $\psi(P_1 + P_2) = \psi(P_1) + \psi(P_2)$. Again, we skip $\infty$. Therefo
 (c) Show that $(x, y) \mapsto (−x, iy)$, is an automorphism of the elliptic curve $y^2 = x^3 + Ax$.
 
 \section{Washington 6.1}
-Let E be the curve $y^2 = x^3+1$ over $F_q$, where $q \equiv 2 \mod 3$. By proposition 4.33, $E$ is supersingular. Let $\omega \in F_{q^2}$ be a primitive third root of unity. Note that $\omega \not \in F_q$ since the order of $F_q^\times$ is $q−1$, which is not a multiple of $3$.
+Let E be the curve $y^2 = x^3+1$ over $F_q$, where $q \equiv 2 \mod 3$. By proposition 4.33, $E$ is supersingular. Let $\omega \in F_{q^2}$ be a primitive third root of unity. Note that $\omega \not \in F_q$ since the order of $F_q^\times$ is $q-1$, which is not a multiple of $3$.
 
 Show that the map
-$$\beta: E(\bar F_q) \to E(\bar F_q), (x,y) \mapsto (\omega_3 x, y), \beta(\infty) = \infty$$
+$$\beta: E(\bar F_q) \to E(\bar F_q), ~ (x,y) \mapsto (\omega x, y), ~ \beta(\infty) = \infty$$
 is an isomorphism.
 
 \end{document}
