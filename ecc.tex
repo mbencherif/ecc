@@ -268,12 +268,27 @@ A trap-door function is a function that is simple to compute in one direction, b
 In the case of the ECDL, it is simple to compute a point multiplication, but hard to compute the logarithm.
 
 \subsection{Attacks on Discrete Logarithms}
+Imagine we're playing a game.
+I pick a point $P$ on an elliptic curve, and tell you the curve's parameters and the point I picked.
+Then I pick a secret integer $s$ and tell you $sP$. Your job is to find $s$.
+This is the basic model of a user and attacker in cryptosystem which is based on the ECDL.
+Given $P$ and $sP$, can the attacker find $s$? Let's look at how the attacker might go about doing that.
 
 \subsubsection{Naive Multiplication}
-O(n)
+Our first attempt will be to simply try every integer $k$.
+If $kP = sP$ then we know $k = s$.
+If our curve has only a small number of points, then a computer will chew through this problem in seconds.
+Let's say our curve has $n$ points, and each point multiplication takes a maximum of $m$ operations.
+Then naive multiplication has algorithmic complexity $O(nm)$.
+From a user's perspective, $m$ should be small, so curve operations are fast.
+So in order to make the attacker's life difficult, $n$ should be large: the chosen curve should have a large number of points.
+Many curves used for cryptography are over large prime fields, with a massive number of points.
+Using a naive algorithm against such a curve, even with an extremely fast computer, probably won't finish in our lifetime.
 
 \subsubsection{Baby Step Giant Step}
-O(sqrt(n))
+Fortunately (for an attacker) there are many algorithms which reduce the amount of time it takes to solve the ECDLP.
+Let's consider an elliptic curve which is cyclic, with generator $G$ and order $n$.
+The user picks $s$ and computes $sG$. 
 
 \subsubsection{Pohlig-Hellman}
 How many methods should I write about? Is one enough to get the idea?
