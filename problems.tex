@@ -328,9 +328,141 @@ However, the point must be nonsingular. $\frac{\partial F}{\partial y} = 0$, so 
 $$\frac{\partial F}{\partial x} = 3x^2 + A \neq 0$$
 
 \section{Washington 2.17}
-(a) Show that $(x,y) \mapsto (x,−y)$ is a group homomorphism from E to itself, for any elliptic curve in Weierstrass form.
+(a) Show that $(x,y) \mapsto (x, -y)$ is a group homomorphism from E to itself, for any elliptic curve in Weierstrass form.
 
-(b) Show that $(x,y) \mapsto (\zeta x,−y)$, where $\zeta$ is a nontrivial cube root of 1, is an automorphism of the elliptic curve $y^2 = x^3 + B$.
+Let $\phi((x,y)) = (x,-y)$. Let $P_1 = (x_1,y_1)$ and $P_2 = (x_2,y_2)$.
+
+\begin{align*}
+\phi(P_1+P_1) &=
+\phi \left(
+	\left(
+		\frac{(3x_1^2+a)^2}{(2y_1)^2}-2x_1,
+		\frac{3x_1(3x_1^2+a)}{2y_1}-\frac{(3x_1^2+a)^3}{(2y_1)^3}-y_1
+	\right)
+\right) \\
+&= \left(
+	\frac{(3x_1^2+a)^2}{(2y_1)^2}-2x_1,
+	\frac{(3x_1^2+a)^3}{(2y_1)^3} - \frac{3x_1(3x_1^2+a)}{2y_1} + y_1
+\right)
+\end{align*}
+
+\begin{align*}
+\phi(P_1)+\phi(P_1) &= (x_1,-y_1) + (x_1,-y_1) \\
+&= \left(
+	\frac{(3x_1^2+a)^2}{(-2y_1)^2}-2x_1,
+	\frac{3x_1(3x_1^2+a)}{-2y_1}-\frac{(3x_1^2+a)^3}{(-2y_1)^3}+y_1
+\right) \\
+&= \left(
+	\frac{(3x_1^2+a)^2}{(2y_1)^2}-2x_1,
+	\frac{(3x_1^2+a)^3}{(2y_1)^3} - \frac{3x_1(3x_1^2+a)}{2y_1} + y_1
+\right)
+\end{align*}
+
+Thus $\phi(P_1 + P_1) = \phi(P_1) + \phi(P_1)$.
+
+\begin{align*}
+\phi(P_1+P_2) &= 
+\phi \left(
+	\left(
+		\frac{(y_2-y_1)^2}{(x_2-x_1)^2}-x_1-x_2,
+		\frac{(2x_1+x_2)(y_2-y_1)}{(x_2-x_1)}-\frac{(y_2-y_1)^3}{(x_2-x_1)^3}-y_1
+	\right)
+\right) \\
+&= \left(
+	\frac{(y_2-y_1)^2}{(x_2-x_1)^2}-x_1-x_2,
+	\frac{(y_2-y_1)^3}{(x_2-x_1)^3} - \frac{(2x_1+x_2)(y_2-y_1)}{(x_2-x_1)} + y_1
+\right)
+\end{align*}
+
+\begin{align*}
+\phi(P_1) + \phi(P_2) &= (x_1, -y_1) + (x_2, -y_2) \\
+&=
+\left(
+	\frac{(-y_2+y_1)^2}{(x_2-x_1)^2}-x_1-x_2,
+	\frac{(2x_1+x_2)(-y_2+y_1)}{(x_2-x_1)}-\frac{(-y_2+y_1)^3}{(x_2-x_1)^3}+y_1
+\right)
+\\
+&= \left(
+	\frac{(y_2-y_1)^2}{(x_2-x_1)^2}-x_1-x_2,
+	\frac{(y_2-y_1)^3}{(x_2-x_1)^3} - \frac{(2x_1+x_2)(y_2-y_1)}{(x_2-x_1)} - y_1
+\right)
+\end{align*}
+
+Thus $\phi(P_1 + P_2) = \phi(P_1) + \phi(P_2)$. We ignore the cases with $\infty$ because they are trivial. Therefore $\phi$ is a homomorphism.
+
+(b) Show that $(x,y) \mapsto (\zeta x, -y)$, where $\zeta$ is a nontrivial cube root of 1, is an automorphism of the elliptic curve $y^2 = x^3 + B$.
+
+Let $\psi((x,y)) = (\zeta x, -y)$. Define $P_1$ and $P_2$ as in (a).
+
+\begin{align*}
+\psi(P_1+P_1) &=
+\psi \left(
+	\left(
+		\frac{(3x_1^2)^2}{(2y_1)^2}-2x_1,
+		\frac{3x_1(3x_1^2)}{2y_1}-\frac{(3x_1^2)^3}{(2y_1)^3}-y_1
+	\right)
+\right) \\
+&= \left(
+	\zeta \left(\frac{(3x_1^2)^2}{(2y_1)^2}-2x_1 \right),
+	\frac{(3x_1^2)^3}{(2y_1)^3} - \frac{3x_1(3x_1^2)}{2y_1} + y_1
+\right)
+\end{align*}
+
+\begin{align*}
+\psi(P_1)+\psi(P_1) &= (\zeta x_1,-y_1) + (\zeta x_1,-y_1) \\
+&= \left(
+	\frac{(3(\zeta x_1)^2)^2}{(-2y_1)^2}-2\zeta x_1,
+	\frac{3\zeta x_1(3(\zeta x_1)^2)}{-2y_1}-\frac{(3 (\zeta x_1)^2)^3}{(-2y_1)^3}+y_1
+\right) \\
+&= \left(
+	\zeta \left( \frac{(3x_1^2)^2}{(2y_1)^2}-2x_1 \right),
+	\frac{(3x_1^2)^3}{(2y_1)^3} - \frac{3x_1(3x_1^2)}{2y_1} + y_1
+\right)
+\end{align*}
+
+Thus $\psi(P_1+P_1) = \psi(P_1) + \psi(P_1)$.
+
+\begin{align*}
+\psi(P_1+P_2) &= 
+\psi \left(
+	\left(
+		\frac{(y_2-y_1)^2}{(x_2-x_1)^2}-x_1-x_2,
+		\frac{(2x_1+x_2)(y_2-y_1)}{(x_2-x_1)}-\frac{(y_2-y_1)^3}{(x_2-x_1)^3}-y_1
+	\right)
+\right) \\
+&= \left(
+	\zeta \left(\frac{(y_2-y_1)^2}{(x_2-x_1)^2}-x_1-x_2\right),
+	\frac{(y_2-y_1)^3}{(x_2-x_1)^3} - \frac{(2x_1+x_2)(y_2-y_1)}{(x_2-x_1)} + y_1
+\right)
+\end{align*}
+
+\begin{align*}
+\psi(P_1) + \psi(P_2) &= (\zeta x_1, -y_1) + (\zeta x_2, -y_2) \\
+&=
+\psi\left( 
+	\left(
+		\frac{(-y_2+y_1)^2}{( x_2 -  x_1)^2}- x_1-  x_2,
+		\frac{(2 x_1+ x_2)*(-y_2+y_1)}{(x_2-x_1)}-\frac{(-y_2+y_1)^3}{( x_2- x_1)^3}+y_1
+	\right)
+\right) \\
+&= \left(
+	\frac{(y_2-y_1)^2}{(\zeta x_2-\zeta x_1)^2}-\zeta x_1-\zeta x_2,
+	\frac{(y_2-y_1)^3}{(\zeta x_2-\zeta x_1)^3} - \frac{(2\zeta x_1+\zeta x_2)(y_2-y_1)}{(\zeta x_2-\zeta x_1)} + y_1
+\right)
+\\
+&=
+\left(
+	\frac{(y_2-y_1)^2}{\zeta^2(x_2-x_1)^2}-\zeta x_1-\zeta x_2,
+	\frac{(y_2-y_1)^3}{\zeta^3(x_2-x_1)^3} - \frac{\zeta(2x_1+x_2)(y_2-y_1)}{\zeta(x_2-x_1)} + y_1
+\right) \\
+&=
+\left(
+	\zeta \left( \frac{(y_2-y_1)^2}{(x_2-x_1)^2}-x_1-x_2 \right),
+	\frac{(y_2-y_1)^3}{(x_2-x_1)^3} - \frac{(2x_1+x_2)(y_2-y_1)}{(x_2-x_1)} + y_1
+\right)
+\end{align*}
+
+Thus $\psi(P_1 + P_2) = \psi(P_1) + \psi(P_2)$. Again, we skip $\infty$. Therefore $\psi$ is a homomorphism.
 
 (c) Show that $(x, y) \mapsto (−x, iy)$, is an automorphism of the elliptic curve $y^2 = x^3 + Ax$.
 
