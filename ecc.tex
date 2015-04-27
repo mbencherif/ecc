@@ -1,6 +1,7 @@
 \documentclass{article}
 
-\usepackage{graphicx, caption, subcaption, amsmath, amsfonts}
+\usepackage{graphicx, caption, subcaption}
+\usepackage{amsmath, amsfonts, amsthm}
 
 \usepackage{hyperref}
 \hypersetup{
@@ -9,6 +10,8 @@
     linkcolor=black,
     urlcolor=blue
 }
+
+\newtheorem*{theorem}{Theorem}
 
 % Automatic float-barrier around subsections
 \usepackage[section]{placeins}
@@ -224,16 +227,61 @@ So $P + (-P) = \infty$.
 
 \subsubsection{Closure}
 Now we have fully defined the group law for an elliptic curve.
-The closure of the set $\{\infty\} \cup \{(x,y) \mid x,y \in F \text{ and } y^2 = x^3 + ax + b\}$ follows from thi group law and the closure of the field $F$.
+The closure of the set $\{\infty\} \cup \{(x,y) \mid x,y \in F \text{ and } y^2 = x^3 + ax + b\}$ follows from the group law and the closure of the field $F$.
 
 \subsubsection{Commutativity}
 The group law is commutative because the line through two points is defined symmetrically.
 In other words, the line through points $A$ and $B$ is the same as the line through points $B$ and $A$.
 
 \subsubsection{Associativity}
-Is it worth proving associativity? I think it's not.
-The proof is quite long and involved.
-I think simply offering a reference is enough.
+We will prove the associativity of the group law geometrically, but it also follows algebraically from the formulas above.
+To complete the proof, we will use a theorem from projective geometry:
+
+\begin{theorem}[Cayley-Bacharach Theorem]
+Let $C$, $C_1$, and $C_2$ be three cubic curves.
+Suppose $C$ goes through eight of the nine points of $C_1$ and $C_2$.
+Then $C$ goes through the ninth intersection point.
+\end{theorem}
+
+Let $P,Q,R$ on our elliptic curve $E$.
+To show that $P+(Q+R) = (P+Q)+R$, it suffices to show that $P*(Q+R) = (P+Q)*R$.
+Our goal is to define two cubic curves, one of which intersects $P*(Q+R)$ and the other which intersects $(P+Q)*R$.
+Then, if their other eight points of intersection match, it must be that $P*(Q+R) = (P+Q)*R$.
+
+Let $C_1$ be the curve through $P*(Q+R)$ and $C_2$ the curve through $(P+Q)*R$.
+We will construct $C_1$ and $C_2$ directly.
+Consider a linear equation $f(x,y) = ax + by + c = 0$.
+Given three such equations $f_1, f_2, f_3$, we can construct a cubic curve $g(x,y) = (f_1(x,y))(f_2(x,y)(f_3(x,y)) = 0$.
+Then every zero of $g$ is on one of the lines; so the curve is the union of the points on each of the lines and the point at infinity.
+
+Let's start with $C_1$ (figure \ref{fig:ec-assoc-1}).
+We want to deconstruct the point $P*(Q+R)$ into three linear equations.
+The first line is the line between $Q$ and $R$, whose third point of intersection is $Q*R$.
+The second line is between $Q*R$ and $\infty$, which intersects the curve at $Q+R$.
+The third line is between $Q+R$ and $P$, which intersects the curve at $P*(Q+R)$.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\linewidth]{images/ec5-assoc-1.png}
+\caption{Defining $C_1$ as the union of three lines}
+\label{fig:ec-assoc-1}
+\end{figure}
+
+For $C_2$, we define the lines similarly (figure \ref{fig:ec-assoc-2}).
+Line one has intersections $P$, $Q$, and $P*Q$.
+Line two has intersections $P*Q$, $\infty$, and $P+Q$.
+Line three has intersections $P+Q$, $R$, and $P*(Q+R)$.
+Thus we have two curves $C_1$ and $C_2$ which intersect at eight points, so their ninth point of intersection is equal by Cayley-Bacharach.
+\cite[\S 1.2]{rational-points}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\linewidth]{images/ec5-assoc-2.png}
+\caption{Defining $C_2$ as the union of three lines}
+\label{fig:ec-assoc-2}
+\end{figure}
+
+This completes our proof that $(E,+)$ is a group.
 
 \subsection{Weierstrass Form and Acceptable Changes of Variables}
 General form of a cubic curve.
