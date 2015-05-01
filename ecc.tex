@@ -2,6 +2,7 @@
 
 \usepackage{graphicx, caption, subcaption}
 \usepackage{amsmath, amsfonts, amsthm}
+\usepackage{algorithm, algpseudocode}
 
 \usepackage{hyperref}
 \hypersetup{
@@ -34,25 +35,25 @@
 \tableofcontents
 \clearpage
 
-\section*{Foreword}
-\addcontentsline{toc}{section}{Foreword}
-Draft of project for Math 415B.
-
-Status of code: complete. See \texttt{curve25519.rb}.
-
-Status of problems: incomplete. See \texttt{problems.pdf}.
-
-Status of report: incomplete. Outline completed with some sections filled in.
-
-In writing this report, I aimed to hit the most important points for a picture of elliptic curves as they would be applied for cryptography. 
-Some sections are (or will be) rigorous while others simply provide an overview or guided discussion of ``why things are the way they are''. 
-The references provide a much more in-depth discussion of this topic.
-
-Sections I've omitted that I could include: Projective Geometry, Finite Field Arithmetic, Derivation of Group Law for Montgomery Curves
-
-Sections I've included that I could omit: Normal Forms for Elliptic Curves/Acceptable Changes of Variables, Pohlig-Hellman Algorithm
-
-\clearpage
+%\section*{Foreword}
+%\addcontentsline{toc}{section}{Foreword}
+%Draft of project for Math 415B.
+%
+%Status of code: complete. See \texttt{curve25519.rb}.
+%
+%Status of problems: incomplete. See \texttt{problems.pdf}.
+%
+%Status of report: incomplete. Outline completed with some sections filled in.
+%
+%In writing this report, I aimed to hit the most important points for a picture of elliptic curves as they would be applied for cryptography. 
+%Some sections are (or will be) rigorous while others simply provide an overview or guided discussion of ``why things are the way they are''. 
+%The references provide a much more in-depth discussion of this topic.
+%
+%Sections I've omitted that I could include: Projective Geometry, Finite Field Arithmetic, Derivation of Group Law for Montgomery Curves
+%
+%Sections I've included that I could omit: Normal Forms for Elliptic Curves/Acceptable Changes of Variables, Pohlig-Hellman Algorithm
+%
+%\clearpage
 
 \section{Elliptic Curves}
 An \textbf{elliptic curve} is a set of points satisfying an equation of the form
@@ -64,8 +65,8 @@ This condition ensures that the curve is \textit{non-singular}, which allows us 
 
 Let's start with a few examples of curves, plotted over the real numbers.
 Figure \ref{fig:ec-plot} shows a simple elliptic curve.
-It has three real roots, which correspond to the zeroes of the polynomial $x^3 - 3x + 1$.
-Figure \ref{fig:ec-plot2} shows the elliptic curve $y^2 = x^3 - 2x + 2$, which only has one real root.
+The three points where it crosses the $x$-axis correspond to the zeroes of the polynomial $x^3 - 3x + 1$.
+Figure \ref{fig:ec-plot2} shows the elliptic curve $y^2 = x^3 - 2x + 2$, which only crosses the $x$-axis once in $\mathbb{R}$.
 
 \begin{figure}[h]
 \centering
@@ -315,6 +316,12 @@ In fact, many modern cryptosystems are based on a class of operations called \te
 A trap-door function is a function that is simple to compute in one direction, but very costly to compute in the other direction.
 In the case of the ECDL, it is simple to compute a point multiplication, but hard to compute the logarithm.
 
+Note that this is not a formal definition.
+In general, a trap-door function is infeasible to break, given current computing resources.
+However, most trap-door functions can only be conjectured to be secure.
+While we currently do not know any algorithms which solve the ECDLP, there is no guarantee that a fast algorithm does not exist.
+Next, we'll consider a basic approach to solving ECDLP.
+
 \subsection{Attacks on Discrete Logarithms}
 Imagine we're playing a game.
 I pick a point $P$ on an elliptic curve, and tell you the curve's parameters and the point I picked.
@@ -326,20 +333,43 @@ Given $P$ and $sP$, can the attacker find $s$? Let's look at how the attacker mi
 Our first attempt will be to simply try every integer $k$.
 If $kP = sP$ then we know $k = s$.
 If our curve has only a small number of points, then a computer will chew through this problem in seconds.
-Let's say our curve has $n$ points, and each point multiplication takes a maximum of $m$ operations.
-Then naive multiplication has algorithmic complexity $O(nm)$.
-From a user's perspective, $m$ should be small, so curve operations are fast.
-So in order to make the attacker's life difficult, $n$ should be large: the chosen curve should have a large number of points.
-Many curves used for cryptography are over large prime fields, with a massive number of points.
+Let's say our curve has $N$ points, and each point multiplication takes a maximum of $M$ operations.
+Then naive multiplication has algorithmic complexity $O(NM)$.
+
+From a user's perspective, $M$ should be small, so curve operations are fast.
+In order to make the attacker's life difficult, $N$ should be large: the chosen curve should have a large number of points.
+Many curves used for cryptography are over large prime fields, with a massive number of points (more than $2^200$).
 Using a naive algorithm against such a curve, even with an extremely fast computer, probably won't finish in our lifetime.
 
 \subsubsection{Baby Step Giant Step}
-Fortunately (for an attacker) there are many algorithms which reduce the amount of time it takes to solve the ECDLP.
-Let's consider an elliptic curve which is cyclic, with generator $G$ and order $n$.
-The user picks $s$ and computes $sG$. 
+There are a number of algorithms which reduce the amount of time it takes to solve the ECDLP.
+Let's consider an elliptic curve (or a subgroup) which is cyclic, with generator $G$ and order $N$.
+The user picks $n$ and computes $nG$. 
 
-\subsubsection{Pohlig-Hellman}
-How many methods should I write about? Is one enough to get the idea?
+The Baby-Step Giant-Step algorithm rewrites the point $P = nG$ as $(im + j)G$, with $m = \lceil \sqrt{N} \rceil$.
+Then $jP$ is computed for $0 \leq j < m$ and stored.
+Finally, multiplication is used to find $imG$ for $0 \leq i < m$, which is subtracted from $P$ to solve for $jG$.
+
+\begin{algorithm}
+\caption{Baby-Step Giant-Step for ECDLP}
+\begin{algorithmic}
+\State $m \gets \sqrt{N}$
+\For{$0 \leq j < m$}
+	\State Compute and store $(j, jP)$
+\EndFor
+\For{$0 \leq i < m$}
+	\State Compute $Q - imP$
+	\If{$Q-imP = jP$ for some $j$}
+		\State \Return $n \equiv j + im$
+	\EndIf
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+
+Baby-Step Giant-Step completes in $O(\sqrt{N} M)$ time and $O(\sqrt{N})$ space complexity.
+This is a large improvement over naive multiplication, but still very slow on cryptographic curves. 
+While there are some algorithms which solve specific cases of the ECDLP, there is known algorithm which feasibly solves this problem on a general cryptographic curve.
+The security of an elliptic curve cryptosystem relies on this fact.
 
 \clearpage
 
