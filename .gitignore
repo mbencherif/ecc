@@ -6,4 +6,7 @@
 *.out
 *.toc
 
+*.nav
+*.snm
+
 *.m~
