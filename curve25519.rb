@@ -5,6 +5,7 @@
 require 'SecureRandom'
 require 'digest'
 
+# Fast Modular Exponentiation (base**exp % mod)
 def modexp(base, exp, mod)
     prod = 1
     base = base % mod
@@ -16,6 +17,7 @@ def modexp(base, exp, mod)
     prod
 end
 
+# Extended Euclidean Algorithm
 def egcd(a, b)
     if a == 0
         return b, 0, 1
@@ -25,6 +27,7 @@ def egcd(a, b)
     end
 end
 
+# Modular Inverse (a**-1 mod m)
 def modinv(a, m)
 	if a < 0
 		return modinv(a % m, m)
@@ -95,6 +98,7 @@ module Curve25519
 	# homogenous form b*y^2*z = x^3 + a*x^2*z + x*z^2
 	# z = 0 -> x^3 = 0 -> x = 0
 	# => point at infinity is (0,1,0)
+	# we can use (0,1) in affine coords, because it is not on the curve
 	Inf = Point.new(0, 1)
 
 	# Base point specified by Bernstein
@@ -206,8 +210,6 @@ module ECDH
 			shared = other.public_key.mult(@secret)
 
 			# Bernstein uses Salsa20 as his hash
-			# >	Salsa20(c0, x0, 0, x1, x2, c1, x3, 0, 0, x4, c2, x5, x6, 0, x7, c3)
-			# >		(c0, c1, c2, c3) is “Curve25519output”
 			# We'll just stick with sha256 since it's built in		
 			hash = Digest::SHA256.new
 			hash << shared.x.to_s(16)
