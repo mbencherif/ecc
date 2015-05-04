@@ -369,7 +369,7 @@ Finally, multiplication is used to find $imG$ for $0 \leq i < m$, which is subtr
 Baby-Step Giant-Step completes in $O(\sqrt{N} M)$ time and $O(\sqrt{N})$ space complexity.
 This is a large improvement over naive multiplication, but still very slow on cryptographic curves. 
 While there are some algorithms which solve specific cases of the ECDLP, there is no known algorithm which feasibly solves this problem on a general cryptographic curve.
-The security of an elliptic curve cryptosystem relies on this fact.
+The security of an elliptic curve cryptosystem relies on this fact \cite[\S 5]{washington}.
 
 \clearpage
 
@@ -393,7 +393,7 @@ The \textbf{Elliptic Curve Diffie-Hellman Exchange} (ECDHE) proceeds as follows:
 \begin{algorithm}
 \caption{Elliptic Curve Diffie-Hellman Exchange}
 \begin{enumerate}
-\item Alice and Bob agree on a curve $C$ and a generating point $P$. (In the real world, these parameters are standardized and known to everyone.)
+\item Alice and Bob agree on a curve $C$ and a generating point $P$. (In practice, these parameters are standardized and known to everyone.)
 \item Alice generates a random, secret integer $a$ and sends Bob $aP$.
 \item Bob generates a random, secret integer $b$ and sends Alica $bP$.
 \item Alice computes $a(bP)$.
@@ -407,12 +407,48 @@ Eve, however, only knows the points $aP$ and $bP$, which she cannot use to compu
 Thus for Eve to break the ECDHE, she must solve the ECDL: given $aP$, find $a$, or given $bP$, find $b$.
 From now on, Alice and Bob can use a symmetric encryption algorithm (such as AES) to communicate securely.
 Their shared key is derived from $abP$.
-Since $abP$ is a point on a curve, typically they will use an agreed upon method of key derivation, such as a hash of the $x$-coordinate.
+Note that $abP$ is a point on a curve, while most encryption algorithms desire keys to be a string of random bytes.
+Typically Alice and Bob will use an agreed upon method of key derivation, such as a hash of the $x$-coordinate, to generate the actual session key \cite[\S 6.2]{washington}.
 
 \subsection{Implementation Details of ECDH}
-Curve25519 details.
-Should I include Montgomery curve addition and doubling formulas?
-Should I include their derivation?
+
+\subsubsection{Choice of Curve}
+We now have all of the necessary information to implement a theoretical cryptosystem.
+However, one of the most important choices in cryptographic design is the choice of parameters: what curve will we use, over what field, and what will the generating point be?
+Wrong choices in these areas can result in massive holes in the security of the ECDL.
+Daniel J. Bernstein and Tanja Lange have produced a \href{http://safecurves.cr.yp.to/}{database} of the numerous choices of curves, and how seemingly safe choices can be insecure.
+
+For our implementation, we will use Bernstein's \textit{Curve25519}.
+Curve25519 is an elliptic curve in Montgomery form, over the prime field $\mathbb{Z}_p$ where $p = 2^{255} - 19$.
+This curve was designed for security: for example, it is not vulnerable to attacks based on subgroups of the curve \cite{curve25519}.
+
+\subsubsection{Point Multiplication}
+One consideration that is not very important in theory, but extremely important in reality is how to perform a point multiplication.
+The naive method is to compute $nP$ by summing $n$ copies of $P$: $P + P + \cdots + P$.
+This algorithm is exponential, which is to say, extremely slow for a real-world application.
+We can see an immediate improvement from the decomposition of $n$ into binary.
+Then, each zero bit of $n$ corresponds to a doubling of the point $P$, and each one bit of $n$ corresponds to adding $P$ and doubling.
+
+Let $b_m b_{m-1} \cdots b_1 b_0$ be the binary representation of $n$ (where $b_m$ is the most-significant bit).
+The Double-and-Add algorithm is described below.
+\begin{algorithm}
+\caption{Elliptic Curve Point Multiplication: Double-and-Add}
+\begin{algorithmic}
+\State $Q \gets \infty$
+\For{$0 \leq i \leq m$}
+	\If{$b_i = 1$}
+		\State $Q \gets Q + P$
+	\EndIf
+	\State $Q \gets 2Q$
+\EndFor
+\State \Return $Q$
+\end{algorithmic}
+\end{algorithm}
+
+While Double-and-Add is much faster than repeated addition, it demonstrates one of the difficulties of real-world cryptography.
+Specifically, this algorithm leaks information about $n$ by performing a different number of doublings and additions based on the binary representation of $n$.
+This information leakage makes an implementation which uses Double-and-Add vulnerable to timing or power analysis.
+To avoid this vulnerability in practice, an ECDHE implementation will use the \href{http://safecurves.cr.yp.to/ladder.html}{Montgomery Ladder}, a multiplication algorithm which operates in constant time \cite[\S 3.3]{ecc-guide}. 
 
 \clearpage
 
