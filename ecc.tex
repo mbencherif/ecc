@@ -338,7 +338,7 @@ Then naive multiplication has algorithmic complexity $O(NM)$.
 
 From a user's perspective, $M$ should be small, so curve operations are fast.
 In order to make the attacker's life difficult, $N$ should be large: the chosen curve should have a large number of points.
-Many curves used for cryptography are over large prime fields, with a massive number of points (more than $2^200$).
+Many curves used for cryptography are over large prime fields, with a massive number of points (more than $2^{200}$).
 Using a naive algorithm against such a curve, even with an extremely fast computer, probably won't finish in our lifetime.
 
 \subsubsection{Baby Step Giant Step}
@@ -368,17 +368,46 @@ Finally, multiplication is used to find $imG$ for $0 \leq i < m$, which is subtr
 
 Baby-Step Giant-Step completes in $O(\sqrt{N} M)$ time and $O(\sqrt{N})$ space complexity.
 This is a large improvement over naive multiplication, but still very slow on cryptographic curves. 
-While there are some algorithms which solve specific cases of the ECDLP, there is known algorithm which feasibly solves this problem on a general cryptographic curve.
+While there are some algorithms which solve specific cases of the ECDLP, there is no known algorithm which feasibly solves this problem on a general cryptographic curve.
 The security of an elliptic curve cryptosystem relies on this fact.
 
 \clearpage
 
 \section{Elliptic-Curve Diffie-Hellman Exchange}
+The split between what we recognize as modern and pre-modern cryptography coincides directly with the development of public key cryptography.
+Public key cryptography is a class of cryptosystems which are defined by the fact that each user has a public key, which they publish for anyone to see, and a private key, which they keep secret.
+The public key allows anyone who wants to communicate with that user to derive some information which is only shared between those two users, even over an insecure channel.
+
+One of the major problems of pre-modern cryptography was that every method of communication required a shared key.
+This problem is called the key distribution problem.
+Essentially, if two parties wanted to communicate they needed to meet and exchange a key - there was no way to communicate over an insecure channel without first communicating over a secure channel.
+Public key cryptography solves this problem by allowing two parties to communicate without the need of a shared key, or to securely derive one over an insecure channel.
 
 \subsection{The Diffie-Hellman Key Exchange}
-Introduction to public-key cryptography.
-Discussion of Diffie-Hellman and relation to ECDLP.
-Derivation of a session-key for encrypted communication using ECDHE.
+The Diffie-Hellman Key Exchange is a method of key derivation which allows two users to derive a shared key over an insecure channel.
+It is typical of cryptography to define communication algorithms as follows: imagine two users, Alice and Bob.
+Alice and Bob want to communicate securely, but can only talk over an insecure line.
+Somewhere on the insecure line an attacker, Eve, is listening in and attempting to decrypt their communication.
+
+The \textbf{Elliptic Curve Diffie-Hellman Exchange} (ECDHE) proceeds as follows:
+\begin{algorithm}
+\caption{Elliptic Curve Diffie-Hellman Exchange}
+\begin{enumerate}
+\item Alice and Bob agree on a curve $C$ and a generating point $P$. (In the real world, these parameters are standardized and known to everyone.)
+\item Alice generates a random, secret integer $a$ and sends Bob $aP$.
+\item Bob generates a random, secret integer $b$ and sends Alica $bP$.
+\item Alice computes $a(bP)$.
+\item Bob computes $b(aP)$.
+\item Alice and Bob now share the key $abP$.
+\end{enumerate}
+\end{algorithm}
+
+At this point, it is clear that Alice and Bob share the point $abP$.
+Eve, however, only knows the points $aP$ and $bP$, which she cannot use to compute $abP$.
+Thus for Eve to break the ECDHE, she must solve the ECDL: given $aP$, find $a$, or given $bP$, find $b$.
+From now on, Alice and Bob can use a symmetric encryption algorithm (such as AES) to communicate securely.
+Their shared key is derived from $abP$.
+Since $abP$ is a point on a curve, typically they will use an agreed upon method of key derivation, such as a hash of the $x$-coordinate.
 
 \subsection{Implementation Details of ECDH}
 Curve25519 details.
