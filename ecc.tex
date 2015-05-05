@@ -212,7 +212,7 @@ Multiplying out, we find that the coefficient of the $x^2$ term has the form $-x
 $$x_3 = m^2 - x_1 - x_2$$
 Finally, the third point is reflected across the x-axis.
 To find the y-coordinate, we substitute our x-coordinate in to the equation of our line and negate it.
-$$y_3 = -(mx_3 + b)$$.
+$$y_3 = -(mx_3 + b)$$
 
 \subsubsection{Doubling}
 Let $P_1$ on $C$.
@@ -221,7 +221,7 @@ We can find the slope of the tangent line by implicit differentiation:
 \begin{align*}
 2y \frac{dy}{dx} &= 3x^2 + a \\
 \frac{dy}{dx} &= \frac{3x^2+a}{2y} \\
-m &= \frac{dy}{dx}(x_1,y_1) 
+m &= \frac{3x_1^2+a}{2y_1} 
 \end{align*}
 Then we simply follow the same process for addition.
 \begin{align*}
@@ -483,7 +483,7 @@ The code is designed for clarity and understanding, so my code deviates in the f
 \item Use of SHA256 for key derivation rather than Salsa20
 \end{itemize}
 
-The use of $(x,y)$ coordinates and the Double-and-Add algorithms are equivalent to Bernstein's choices, but cause some penalties in speed and security.
+The use of $(x,y)$ coordinates and the Double-and-Add algorithm are equivalent to Bernstein's choices, but cause some penalties in speed and security.
 The use of SHA256 as a hashing algorithm is not equivalent to Bernstein's choice, but represents a widely-available hash which is an acceptable choice for key derivation.
 
 \clearpage
