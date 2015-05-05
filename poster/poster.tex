@@ -7,6 +7,7 @@
 %\usepackage{algorithmic}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+\usepackage{minted}
 
 \usepackage{exscale}
 
@@ -15,18 +16,21 @@
 \usepackage{subcaption}
 
 
-\usepackage[orientation=landscape,size=a0,scale=1.4]{beamerposter}
+\usepackage[orientation=landscape,size=a1,scale=1.03]{beamerposter}
+\setlength{\paperwidth}{36in}
+\setlength{\paperheight}{24in}
+\setlength{\textwidth}{0.98\paperwidth}
+\setlength{\textheight}{0.98\paperheight}
 
 \setbeamertemplate{caption}[numbered]
 
 \title{\Huge An Introduction to Elliptic Curve Cryptography}
 \author{Tanner Prynn}
 \institute{The University of Arizona}
-\date{Aug. 31 , 2007}
 
 \begin{document}
-\begin{frame}{} 
-	\vskip-1ex
+\begin{frame}[fragile]
+	\vskip-1.5ex
 	\begin{columns}[t]
 
 	\begin{column}{.3\linewidth}
@@ -40,12 +44,23 @@
 		$4a^3 + 27b^2 \neq 0$.
 		This condition ensures that the curve is \textit{non-singular}, which allows us to find a tangent line to any point on the curve.
 
-		Figure \ref{fig:ec-plot} shows a simple elliptic curve.
+		Figure \ref{fig:ec-plot} shows two simple elliptic curves.
 
 		\begin{figure}[h]
 		\centering
-		\includegraphics[width=0.7\linewidth]{../images/ec1.png}
-		\caption{The elliptic curve $y^2 = x^3 - 3x + 1$}
+
+		\begin{subfigure}{.5\linewidth}
+			\centering
+			\includegraphics[width=1.0\linewidth]{../images/ec1.png}
+		\end{subfigure}%
+		~%
+		\begin{subfigure}{.5\linewidth}
+			\centering
+			\includegraphics[width=1.0\linewidth]{../images/ec4g.png}
+		\end{subfigure}
+
+		\caption{The elliptic curves $y^2 = x^3 - 3x + 1$ and $y^2 = x^3 - 2x + 2$}
+
 		\label{fig:ec-plot}
 		\end{figure}
 
@@ -64,13 +79,13 @@
 		\begin{figure}[h]
 		\centering
 
-		\begin{subfigure}{.5\linewidth}
+		\begin{subfigure}{.45\linewidth}
 			\centering
 			\includegraphics[width=1\linewidth]{../images/ec4-plus.png}
 			\label{fig:ec-plus-1}
 		\end{subfigure}%
 		~%
-		\begin{subfigure}{.5\linewidth}
+		\begin{subfigure}{.45\linewidth}
 			\centering
 			\includegraphics[width=1\linewidth]{../images/ec4-plus-tangent.png}
 			\label{fig:ec-plus-2}
@@ -84,6 +99,11 @@
 		To add two points together, take the line between them and find its third point of intersection with the curve, then reflect across the $x$-axis.
 		To add a point to itself, use the tangent line.
 		The identity of $+$ is $\infty$. The inverse of a point is its reflection across the $x$-axis.
+
+		From the geometric definition, it is possible to derive an algebraic formula for the $+$ operation by finding the equation of the line, and solving the resulting system of equations.
+		%The following algebraic formula computes $(x_3,y_3) = (x_1, y_1) + (x_2,y_2)$:
+		%$$x_3 = \frac{(y_2-y_1)^2}{(x_2-x_1)^2}-x_1-x_2, ~ 
+		%y_3 = \frac{(2x_1+x_2)(y_2-y_1)}{x_2-x_1}-\frac{(y_2-y_1)^3}{(x_2-x_1)^3}-y_1$$
 
 	\end{block}
 
@@ -105,9 +125,11 @@
 		\vskip1ex
         \noindent{\textbf{Naive Multiplication}} \\
 		If an attacker knows $P$ and $nP$, where $N$ is the order of $C$, then they can solve the discrete logarithm problem by testing if $mP = nP$ for each $m$, $1 \leq m < N$.
-		This is the simplest attack on the ECDLP, and will complete in $O(NM)$ time, where $M$ is the cost of an elliptic curve multiplication.
+		This is the simplest solution to the ECDL, and will complete in $O(NM)$ time, where $M$ is the cost of an elliptic curve multiplication.
 
-		For small curves, a computer performing naive multiplication will quickly solve the ECDLP. 
+		For small curves, a computer performing naive multiplication will quickly solve this problem.
+		However, there is no known algorithm which feasibly solves the ECDL on a generic cryptographic curve.
+		This problem, known as the Elliptic Curve Discrete Logarithm Problem (ECDLP), is what elliptic curve cryptography is based on.
 		Generic attacks against the ECDLP all have complexity which is a function of the order of the curve, so cryptographic curves are picked such that their order is very large: more than $2^{200}$.
 
 		\vskip1ex
@@ -118,7 +140,7 @@
 
 		\vskip1ex
 		\centerline{
-		\begin{minipage}{0.8\linewidth}
+		\begin{minipage}{0.9\linewidth}
 		\centering
 		\begin{algorithm}[H]
 		\caption*{Baby-Step Giant-Step for ECDLP}
@@ -141,7 +163,6 @@
 
 		Baby-Step Giant-Step completes in $O(\sqrt{N} M)$ time and $O(\sqrt{N})$ space complexity.
 		This is a large improvement over naive multiplication, but still very slow on cryptographic curves. 
-		There is no known algorithm which feasibly solves the ECDLP on a generic cryptographic curve, and this problem is what elliptic curve cryptography is based on.
 	\end{block}
 
 	\end{column}
@@ -149,15 +170,65 @@
 	\begin{column}{.3\linewidth}
 
 	\begin{block}{Elliptic Curve Diffie-Hellman Exchange}
+	One of the major problems of pre-modern cryptography was that every method of communication required a shared key.
+	This problem is called the key distribution problem.
+	Essentially, if two parties wanted to communicate they needed to meet and exchange a key - there was no way to communicate over an insecure channel without first communicating over a secure channel.
+	The Elliptic Curve Diffie-Hellman Key Exchange (ECDHE) is a method of key derivation which allows two users to derive a shared key over an insecure channel.
+
+	\vskip1ex
+	\centerline{
+	\begin{minipage}{0.9\linewidth}
+	\centering
+	\begin{algorithm}[H]
+	\caption*{Elliptic Curve Diffie-Hellman Exchange}
+	\begin{enumerate}
+	\item Alice and Bob agree on a curve $C$ and a generating point $P$. (In practice, these parameters are standardized and known to everyone.)
+	\item Alice generates a random, secret integer $a$ and sends Bob $aP$.
+	\item Bob generates a random, secret integer $b$ and sends Alica $bP$.
+	\item Alice computes $a(bP)$.
+	\item Bob computes $b(aP)$.
+	\item Alice and Bob now share the key $abP$.
+	\end{enumerate}
+	\end{algorithm}
+	\end{minipage}
+	}
+
 	\end{block}
 
 	\vskip1ex
 
-	\begin{block}{Curve25519}
+	\begin{block}{Elliptic Curve Point Multiplication}
+	Point multiplications is one component of Elliptic Curve Cryptography which is very important in practice.
+	Consider the computation of $nP$ for a point $P$ and integer $n$.
+	Naive multiplication by repeated addition is very slow (exponential).
+	The \textit{Double-and-Add} algorithm computes $nP$ by looping through the bits of $n$, adding on a 1 bit and doubling on a 0 or 1 bit.
+
+	Double-and-Add is much faster than repeated addition, but it leaks information about $n$ by performing a different number of operations based on the binary representation.
+	This information leakage makes an implementation which uses Double-and-Add vulnerable to timing or power analysis.
+	A real-world implementation of ECDHE will use the Montgomery Ladder, which operates in constant time.
+	\end{block}
+
+	\vskip1ex
+
+	\begin{block}{Implementation of ECDHE on Curve25519}
+	The result of my research is a pedagogical implementation of the Elliptic-Curve Diffie-Hellman Exchange, using Bernstein's Curve25519.
+	Curve25519 is an elliptic curve in Montgomery form, over the prime field $\mathbb{Z}_p$ where $p = 2^{255} - 19$.
+
+	\vskip1ex
+	\begin{minted}{ruby}
+	# Create ECDH users alice and bob
+	a = ECDH::User.new('alice')
+	b = ECDH::User.new('bob')
+	# alice initiates DH exchange with bob
+	a.negotiate(b)
+	# alice and bob now have a shared secret key
+	a.keys['bob'] == b.keys['alice'] # true
+	\end{minted}
+
 	\end{block}
 
 	\end{column}
 
 	\end{columns}
-\end{frame}{}
+\end{frame}
 \end{document}
