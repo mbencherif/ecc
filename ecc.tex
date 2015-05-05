@@ -120,7 +120,16 @@ Figure \ref{fig:ec-3rd-intersection} shows this operation for the simple case of
 \label{fig:ec-3rd-intersection}
 \end{figure}
 
-What other cases are there?
+It is not immediately clear that this operation is well-defined.
+If we consider the curve and line algebraically, we can define their equations in projective space.
+Then, there are three solutions (counting multiplicity) to the system of equations
+\begin{align*}
+Y^2Z &= X^3 + aXZ^2 + bZ^3 \\
+Y &= \alpha X + \beta Z
+\end{align*}
+So the line and the elliptic curve intersect at three points.
+
+Returning to the affine plane, what other cases do we need to consider?
 First, we need to define $*$ when $P_1 = P_2$.
 We want to have the line through $P_1$ hit the curve at exactly two points, $P_1$ and $P_1*P_1$.
 To achieve this, let the line through $P_1$ be the tangent to the curve.
@@ -263,7 +272,7 @@ The third line is between $Q+R$ and $P$, which intersects the curve at $P*(Q+R)$
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.8\linewidth]{images/ec5-assoc-1.png}
+\includegraphics[width=0.7\linewidth]{images/ec5-assoc-1.png}
 \caption{Defining $C_1$ as the union of three lines}
 \label{fig:ec-assoc-1}
 \end{figure}
@@ -277,19 +286,32 @@ Thus we have two curves $C_1$ and $C_2$ which intersect at eight points, so thei
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.8\linewidth]{images/ec5-assoc-2.png}
+\includegraphics[width=0.7\linewidth]{images/ec5-assoc-2.png}
 \caption{Defining $C_2$ as the union of three lines}
 \label{fig:ec-assoc-2}
 \end{figure}
 
 This completes our proof that $(E,+)$ is a group.
 
-\subsection{Weierstrass Form and Acceptable Changes of Variables}
-General form of a cubic curve.
-Weierstrass Form is not the `only' form of an elliptic curve. 
-We can use an acceptable changes of variables/biration equivalence to write other forms of elliptic curves.
+\subsection{Weierstrass Form and Admissible Changes of Variables}
+Before moving on, we will take a moment to revisit the definition of an elliptic curve.
+Initially, we defined an elliptic curve to have the relatively simple equation $y^2 = x^3 + ax + b$.
+This type of curve is actually a subset of all elliptic curves, and the equation is in \textbf{short Weierstrass form}.
+To use this equation, we had to restrict our field so that it is not characteristic 2 or 3.
 
-E.g. Montgomery Curve
+The most general elliptic curve equation takes the form
+$$y^2 + a_1 xy + a_3 y = x^3 + a_2 x^2 + a_4 x + a_6$$
+Again, the curve must be non-singular.
+However, the condition for singularity is significantly more complicated, so it will not be reproduced here.
+If we \emph{are} working over a field with characteristic different from 2 and 3, we can use an \textbf{admissible change of variables} to transform a general curve equation to one in short Weierstrass form.
+
+Performing an admissible change of variables for an elliptic curve amounts to constructing an isomorphism between two general curves.
+Every admissible change-of-variables takes the form
+$$(x,y) \mapsto (u^2x + r, u^3y + u^2sx + t)$$
+for some $u,s,r,t$ in our field and $u \neq 0$.
+The transformation from general equation to short Weierstrass form uses the following map:
+$$(x,y) \mapsto \left( \frac{x - 3a_1^2 - 12a_2}{2^2 3^2},~ \frac{y-3a_1x}{2^3 3^3} - \frac{a_1^3 + 4a_1a_2 - 12a^3}{2^3 3} \right)$$
+Our restriction to fields with characteristic not 2 or 3 now makes sense: this admissible change of variables requires the inverse of 2 and 3 to be defined \cite[\S 3.1]{ecc-guide}.
 
 \clearpage
 
@@ -416,17 +438,17 @@ Typically Alice and Bob will use an agreed upon method of key derivation, such a
 We now have all of the necessary information to implement a theoretical cryptosystem.
 However, one of the most important choices in cryptographic design is the choice of parameters: what curve will we use, over what field, and what will the generating point be?
 Wrong choices in these areas can result in massive holes in the security of the ECDL.
-Daniel J. Bernstein and Tanja Lange have produced a \href{http://safecurves.cr.yp.to/}{database} of the numerous choices of curves, and how seemingly safe choices can be insecure.
+Daniel J. Bernstein and Tanja Lange have produced a \href{http://safecurves.cr.yp.to/}{database} of the numerous choices of curves, as well as a discussion of various security flaws.
 
 For our implementation, we will use Bernstein's \textit{Curve25519}.
 Curve25519 is an elliptic curve in Montgomery form, over the prime field $\mathbb{Z}_p$ where $p = 2^{255} - 19$.
 This curve was designed for security: for example, it is not vulnerable to attacks based on subgroups of the curve \cite{curve25519}.
 
 \subsubsection{Point Multiplication}
-One consideration that is not very important in theory, but extremely important in reality is how to perform a point multiplication.
+Performing point multiplications is one consideration that is less important in theory but extremely important in reality.
 The naive method is to compute $nP$ by summing $n$ copies of $P$: $P + P + \cdots + P$.
 This algorithm is exponential, which is to say, extremely slow for a real-world application.
-We can see an immediate improvement from the decomposition of $n$ into binary.
+We can see an immediate improvement from the decomposition of $n$ into its binary representation.
 Then, each zero bit of $n$ corresponds to a doubling of the point $P$, and each one bit of $n$ corresponds to adding $P$ and doubling.
 
 Let $b_m b_{m-1} \cdots b_1 b_0$ be the binary representation of $n$ (where $b_m$ is the most-significant bit).
@@ -449,6 +471,20 @@ While Double-and-Add is much faster than repeated addition, it demonstrates one 
 Specifically, this algorithm leaks information about $n$ by performing a different number of doublings and additions based on the binary representation of $n$.
 This information leakage makes an implementation which uses Double-and-Add vulnerable to timing or power analysis.
 To avoid this vulnerability in practice, an ECDHE implementation will use the \href{http://safecurves.cr.yp.to/ladder.html}{Montgomery Ladder}, a multiplication algorithm which operates in constant time \cite[\S 3.3]{ecc-guide}. 
+
+\subsubsection{A Pedagogical Implementation of ECDHE}
+The result of this document is an implementation of the Elliptic-Curve Diffie-Hellman Exchange, using Curve25519.
+The code is available in \texttt{curve25519.rb}.
+I have followed Bernstein's specification fairly closely, but there are some deviations.
+The code is designed for clarity and understanding, so my code deviates in the following ways:
+\begin{itemize}
+\item Use of $(x,y)$ coordinates and formulas, rather than $XZ$ coordinates
+\item Use of Double-and-Add for point multiplication rather than Montgomery Ladder
+\item Use of SHA256 for key derivation rather than Salsa20
+\end{itemize}
+
+The use of $(x,y)$ coordinates and the Double-and-Add algorithms are equivalent to Bernstein's choices, but cause some penalties in speed and security.
+The use of SHA256 as a hashing algorithm is not equivalent to Bernstein's choice, but represents a widely-available hash which is an acceptable choice for key derivation.
 
 \clearpage
 
