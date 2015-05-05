@@ -4,17 +4,21 @@
 
 \begin{document}
 
-\section*{Discussion}
-I picked a selection of 10 problems from Silverman and Washington which I felt were the most relevant problems to my project. Washington provides a section on cryptography but only a single question about Diffie-Hellman (with many questions about outdated El-Gamal), which left me with a lack of questions related to cryptographic applications. Hopefully the coding aspect substitutes for that to some extent.
+\author{Tanner Prynn}
+\title{Math 415B Project - Worked Problems}
+\maketitle
 
-Some of these questions are a bit long, so I'm not sure if I should complete them all (thoughts?).
+%\section*{Discussion}
+%I picked a selection of 10 problems from Silverman and Washington which I felt were the most relevant problems to my project. Washington provides a section on cryptography but only a single question about Diffie-Hellman (with many questions about outdated El-Gamal), which left me with a lack of questions related to cryptographic applications. Hopefully the coding aspect substitutes for that to some extent.
 
-My thoughts on the order of completing the problems (grouped by most to least relevant):
-\begin{itemize}
-\item Silverman ~1.2, ~1.11, x1.12, x1.19
-\item Silverman x1.17, x1.18; Washington x2.5
-\item Silverman 1.14; Washington ~2.17, 6.1
-\end{itemize}
+%Some of these questions are a bit long, so I'm not sure if I should complete them all (thoughts?).
+
+%My thoughts on the order of completing the problems (grouped by most to least relevant):
+%\begin{itemize}
+%\item Silverman x1.2, x1.11, x1.12, x1.19
+%\item Silverman x1.17, x1.18; Washington x2.5
+%\item Silverman o1.14; Washington x2.17, o6.1
+%\end{itemize}
 
 \section{Silverman 1.2}
 Let $C$ be the conic given by the equation
@@ -35,11 +39,11 @@ $$\frac{\partial \bar F}{\partial x} = 2ax + by + dz$$
 $$\frac{\partial \bar F}{\partial y} = bx + 2cy + ez$$
 $$\frac{\partial \bar F}{\partial z} = dx + ey + 2fz$$
 
-$\delta \neq 0$ implies that the our matrix is invertible, i.e. that the only solution to $Ax = 0$ is $x = 0$. But there is no point $(0,0,0)$ in projective space. So $C$ has no singular points.
+$\delta \neq 0$ implies that the matrix is invertible, i.e. that the only solution to $Ax = 0$ is $x = 0$. But there is no point $(0,0,0)$ in projective space. So $C$ has no singular points.
 
 (b) Conversely, show that if $\delta = 0$ and $b^2 - 4ac \neq 0$ then there is a unique singular point on $C$.
 
-If we have a degenerate conic ($\delta = 0$) then we can classify it on whether $J = b^2 - 4ac$ is greater, equal, or less than zero. If $b^2-4ac < 0$, then the conic is two intersecting lines, and has one singular point (the point of intersection). If $b^2 - 4ac > 0$ then the conic is a single singular point. See Dennis, \textit{A Catalog of Special Plane Curves} for a reference.
+If we have a degenerate conic ($\delta = 0$) then we can classify it on whether $J = b^2 - 4ac$ is greater, equal, or less than zero. If $b^2-4ac < 0$, then the conic is two intersecting lines, and has one singular point (the point of intersection). If $b^2 - 4ac > 0$ then the conic is a single point. Thus if $b^2-4ac \neq 0$ then there is a unique singular point on $C$.
 
 (c) Let $L$ be the line $y = \alpha x + \beta$ with $\alpha \neq 0$. Show that the intersection of $L$ and $C$ consists of either zero, one, or two points.
 
@@ -52,11 +56,11 @@ Substitute the equation of the line into the equation for the conic.
 &= a'x^2 + b'x + c'
 \end{align*}
 
-In $\mathbb{R}$, this quadratic equation has zero, one, or two solutions depending on its coefficients.
+We'll consider this equation in $\mathbb{R}$. It's a quadratic equation which has zero, one, or two solutions depending on the determinant ${b'}^2 - 4a'c'$. If the determinant is zero, there is one solution. If the determinant is positive, there are two solutions. If the determinant is negative, there are no real solutions.
 
 (d) Determine the conditions on the coefficients which ensure that the intersection $L \cap C$ consists of exactly one point. What is the geometric significance of these conditions?
 
-There is exactly one solution if $b'^2 - 4a'c' = 0$. In geometric terms, this line must be tangent to the curve.
+There is exactly one solution if ${b'}^2 - 4a'c' = 0$. In geometric terms, this line must be tangent to the curve.
 
 \section{Silverman 1.11}
 Let $S$ be a set with a composition law $*$ satisfying the following two properties:
@@ -94,7 +98,7 @@ X * P &= \mathcal{O} * Q \\
 &= P * (P * (Q * \mathcal{O})) \\
 &= (P * (Q * \mathcal{O})) * P \\
 X &= (P * (Q * \mathcal{O}))
-\end{align*}.
+\end{align*}
 
 Finally
 
@@ -102,7 +106,7 @@ Finally
 X+P &= \mathcal{O}\\
 X &= (P * (\mathcal{O} * \mathcal{O}))\\
 X &= -P
-\end{align*}.
+\end{align*}
 
 (c) Prove that $+$ is associative (and so $(S,+)$ is a group) if and only if:
 
@@ -151,7 +155,7 @@ Let $\phi(P) = \mathcal{O}'$ for some $P \in S$.
 \end{align*}
 So $\ker\phi = \{\mathcal{O}\}$, and thus $\phi$ is an isomorphism.
 
-(e) Find a set $S$ with a composition law $*$ satisfying (i) and (ii) such that $(S,+)$ is not a group.
+%(e) Find a set $S$ with a composition law $*$ satisfying (i) and (ii) such that $(S,+)$ is not a group.
 
 \section{Silverman 1.12}
 The cubic curve $u^3 + v^3 = \alpha$ (with $\alpha \neq 0$) has a rational point $[1,-1,0]$ at infinity. Taking this rational point to be $\mathcal{O}$, we can make the points on the curve into a group.
@@ -189,15 +193,15 @@ $$m = \frac{dv}{du} = -\frac{u^2}{v^2}$$
 
 Then we can use the above formula with this slope to find the new point.
 
-\section{Silverman 1.14}
-Let $C$ be the cubic curve $u^3 + v^3 = u+v+1$. In the projective plane this curve has a point $[1,-1,0]$ at infinity. Find rational functions $x = x(u,v)$ and $y=y(u,v)$ so that $x$ and $y$ satisfy a cubic equation in Weierstrass normal form with the given point still at infinity.
+%\section{Silverman 1.14}
+%Let $C$ be the cubic curve $u^3 + v^3 = u+v+1$. In the projective plane this curve has a point $[1,-1,0]$ at infinity. Find rational functions $x = x(u,v)$ and $y=y(u,v)$ so that $x$ and $y$ satisfy a cubic equation in Weierstrass normal form with the given point still at infinity.
 
 \section{Silverman 1.17}
 Let $C$ be a cubic curve in the projective plane given by the homogenous equation 
 $$Y^2 Z = X^3 + aX^2 Z + bXZ^2 + cZ^3$$
 Verify that the point $[0,1,0]$ at infinity is a non-singular point of $C$.
 
-Let $\hat F = X^3 + aX^2 Z + bXZ^2 + cZ^3 - Y^2Z$. We have the following partial derivatives:
+Let $\bar F = X^3 + aX^2 Z + bXZ^2 + cZ^3 - Y^2Z$. We have the following partial derivatives:
 \begin{align*}
 \frac{\partial \bar F}{\partial x} &= 3Z^2 + 2aZX + bZ^2 \\
 \frac{\partial \bar F}{\partial y} &= 2ZY \\
@@ -211,7 +215,7 @@ Evaluating at the point $[0,1,0]$ we find that
 \frac{\partial \bar F}{\partial z} &= -1
 \end{align*}
 
-So $\frac{\partial \hat F}{\partial z} \neq 0$ and thus $[0,1,0]$ is non-singular.
+So $\frac{\partial \bar F}{\partial z} \neq 0$ and thus $[0,1,0]$ is non-singular.
 
 \section{Silverman 1.18}
 The cubic curve $y^2 = x^3 + 17$ has the following five rational points:
@@ -287,7 +291,6 @@ $$x(2P) = \frac{x^4 - 2bx^2 - 8cx - 4ac + b^2}{4y^2}$$
 
 (b) Derive the formula for the $y$ coordinate of $2P$ in terms of $x$ and $y$.
 $$v = y - \lambda x$$
-
 \begin{align*}
 y(2P) &= \lambda x(2P) + v \\
 &= \frac{3x^2 + 2ax + b}{2y}\frac{x^4 - 2bx^2 - 8cx - 4ac + b^2}{4y^2} + y - \lambda x \\
@@ -316,7 +319,7 @@ We have $a = 0$, $b = 0$, and $c = 1$. We can thus simplify our equation:
 
 Which has zeroes at $x = 0,-2^\frac{2}{3},-i(2^\frac{2}{3}),-(i^\frac{1}{3})(2^\frac{2}{3})$. These correspond to the points:
 $$(0, 0),~\left(-2^\frac{2}{3}, \pm \sqrt{-2^\frac{2}{3} + 1}\right),$$
-$$\left(-i(2^\frac{2}{3}), \pm \sqrt{-i(2^\frac{2}{3}) + 1}\right),~\left(-(i^\frac{1}{3}(2^\frac{2}{3}), \pm \sqrt{-(i^\frac{1}{3})(2^\frac{2}{3}) + 1}\right)$$
+$$\left(-i(2^\frac{2}{3}), \pm \sqrt{-i(2^\frac{2}{3}) + 1}\right),~\left(-(i^\frac{1}{3})(2^\frac{2}{3}), \pm \sqrt{-(i^\frac{1}{3})(2^\frac{2}{3}) + 1}\right)$$
 
 \section{Washington 2.5}
 Let $(x,y)$ be a point on the elliptic curve $E$ given by $y^2 = x^3 + Ax + B$. Show that if $y = 0$ then $3x^2 + A \neq 0$. 
@@ -328,23 +331,23 @@ However, the point must be nonsingular. $\frac{\partial F}{\partial y} = 0$, so 
 $$\frac{\partial F}{\partial x} = 3x^2 + A \neq 0$$
 
 \section{Washington 2.17}
+For a curve in Weierstrass form and points $P_1 = (x_1,y_1), P_2 = (x_2,y_2)$, the doubling and addition formulas follow:
+
+$$P_1+P_1 = \left(
+	\frac{(3x_1^2+a)^2}{(2y_1)^2}-2x_1,
+	\frac{3x_1(3x_1^2+a)}{2y_1}-\frac{(3x_1^2+a)^3}{(2y_1)^3}-y_1
+\right)$$
+
+$$P_1+P_2 = \left(
+	\frac{(y_2-y_1)^2}{(x_2-x_1)^2}-x_1-x_2,
+	\frac{(2x_1+x_2)(y_2-y_1)}{(x_2-x_1)}-\frac{(y_2-y_1)^3}{(x_2-x_1)^3}-y_1
+\right)$$
+
+\vskip1ex
+
 (a) Show that $(x,y) \mapsto (x, -y)$ is a group homomorphism from E to itself, for any elliptic curve in Weierstrass form.
 
 Let $\phi((x,y)) = (x,-y)$. Let $P_1 = (x_1,y_1)$ and $P_2 = (x_2,y_2)$.
-
-\begin{align*}
-\phi(P_1+P_1) &=
-\phi \left(
-	\left(
-		\frac{(3x_1^2+a)^2}{(2y_1)^2}-2x_1,
-		\frac{3x_1(3x_1^2+a)}{2y_1}-\frac{(3x_1^2+a)^3}{(2y_1)^3}-y_1
-	\right)
-\right) \\
-&= \left(
-	\frac{(3x_1^2+a)^2}{(2y_1)^2}-2x_1,
-	\frac{(3x_1^2+a)^3}{(2y_1)^3} - \frac{3x_1(3x_1^2+a)}{2y_1} + y_1
-\right)
-\end{align*}
 
 \begin{align*}
 \phi(P_1)+\phi(P_1) &= (x_1,-y_1) + (x_1,-y_1) \\
@@ -355,24 +358,17 @@ Let $\phi((x,y)) = (x,-y)$. Let $P_1 = (x_1,y_1)$ and $P_2 = (x_2,y_2)$.
 &= \left(
 	\frac{(3x_1^2+a)^2}{(2y_1)^2}-2x_1,
 	\frac{(3x_1^2+a)^3}{(2y_1)^3} - \frac{3x_1(3x_1^2+a)}{2y_1} + y_1
-\right)
+\right) \\
+&= \phi \left(
+	\left(
+		\frac{(3x_1^2+a)^2}{(2y_1)^2}-2x_1,
+		\frac{3x_1(3x_1^2+a)}{2y_1}-\frac{(3x_1^2+a)^3}{(2y_1)^3}-y_1
+	\right)
+\right) \\
+&= \phi(P_1+P_1)
 \end{align*}
 
 Thus $\phi(P_1 + P_1) = \phi(P_1) + \phi(P_1)$.
-
-\begin{align*}
-\phi(P_1+P_2) &= 
-\phi \left(
-	\left(
-		\frac{(y_2-y_1)^2}{(x_2-x_1)^2}-x_1-x_2,
-		\frac{(2x_1+x_2)(y_2-y_1)}{(x_2-x_1)}-\frac{(y_2-y_1)^3}{(x_2-x_1)^3}-y_1
-	\right)
-\right) \\
-&= \left(
-	\frac{(y_2-y_1)^2}{(x_2-x_1)^2}-x_1-x_2,
-	\frac{(y_2-y_1)^3}{(x_2-x_1)^3} - \frac{(2x_1+x_2)(y_2-y_1)}{(x_2-x_1)} + y_1
-\right)
-\end{align*}
 
 \begin{align*}
 \phi(P_1) + \phi(P_2) &= (x_1, -y_1) + (x_2, -y_2) \\
@@ -385,28 +381,23 @@ Thus $\phi(P_1 + P_1) = \phi(P_1) + \phi(P_1)$.
 &= \left(
 	\frac{(y_2-y_1)^2}{(x_2-x_1)^2}-x_1-x_2,
 	\frac{(y_2-y_1)^3}{(x_2-x_1)^3} - \frac{(2x_1+x_2)(y_2-y_1)}{(x_2-x_1)} - y_1
-\right)
+\right) \\
+&= \phi \left(
+	\left(
+		\frac{(y_2-y_1)^2}{(x_2-x_1)^2}-x_1-x_2,
+		\frac{(2x_1+x_2)(y_2-y_1)}{(x_2-x_1)}-\frac{(y_2-y_1)^3}{(x_2-x_1)^3}-y_1
+	\right)
+\right) \\
+&= \phi(P_1+P_2)
 \end{align*}
 
 Thus $\phi(P_1 + P_2) = \phi(P_1) + \phi(P_2)$. We ignore the cases with $\infty$ because they are trivial. Therefore $\phi$ is a homomorphism.
 
+\vskip1ex
+
 (b) Show that $(x,y) \mapsto (\zeta x, -y)$, where $\zeta$ is a nontrivial cube root of 1, is an automorphism of the elliptic curve $y^2 = x^3 + B$.
 
 Let $\psi((x,y)) = (\zeta x, -y)$. Define $P_1$ and $P_2$ as in (a).
-
-\begin{align*}
-\psi(P_1+P_1) &=
-\psi \left(
-	\left(
-		\frac{(3x_1^2)^2}{(2y_1)^2}-2x_1,
-		\frac{3x_1(3x_1^2)}{2y_1}-\frac{(3x_1^2)^3}{(2y_1)^3}-y_1
-	\right)
-\right) \\
-&= \left(
-	\zeta \left(\frac{(3x_1^2)^2}{(2y_1)^2}-2x_1 \right),
-	\frac{(3x_1^2)^3}{(2y_1)^3} - \frac{3x_1(3x_1^2)}{2y_1} + y_1
-\right)
-\end{align*}
 
 \begin{align*}
 \psi(P_1)+\psi(P_1) &= (\zeta x_1,-y_1) + (\zeta x_1,-y_1) \\
@@ -417,24 +408,17 @@ Let $\psi((x,y)) = (\zeta x, -y)$. Define $P_1$ and $P_2$ as in (a).
 &= \left(
 	\zeta \left( \frac{(3x_1^2)^2}{(2y_1)^2}-2x_1 \right),
 	\frac{(3x_1^2)^3}{(2y_1)^3} - \frac{3x_1(3x_1^2)}{2y_1} + y_1
-\right)
+\right) \\
+&= \psi \left(
+	\left(
+		\frac{(3x_1^2)^2}{(2y_1)^2}-2x_1,
+		\frac{3x_1(3x_1^2)}{2y_1}-\frac{(3x_1^2)^3}{(2y_1)^3}-y_1
+	\right)
+\right) \\
+&= \psi(P_1+P_1)
 \end{align*}
 
 Thus $\psi(P_1+P_1) = \psi(P_1) + \psi(P_1)$.
-
-\begin{align*}
-\psi(P_1+P_2) &= 
-\psi \left(
-	\left(
-		\frac{(y_2-y_1)^2}{(x_2-x_1)^2}-x_1-x_2,
-		\frac{(2x_1+x_2)(y_2-y_1)}{(x_2-x_1)}-\frac{(y_2-y_1)^3}{(x_2-x_1)^3}-y_1
-	\right)
-\right) \\
-&= \left(
-	\zeta \left(\frac{(y_2-y_1)^2}{(x_2-x_1)^2}-x_1-x_2\right),
-	\frac{(y_2-y_1)^3}{(x_2-x_1)^3} - \frac{(2x_1+x_2)(y_2-y_1)}{(x_2-x_1)} + y_1
-\right)
-\end{align*}
 
 \begin{align*}
 \psi(P_1) + \psi(P_2) &= (\zeta x_1, -y_1) + (\zeta x_2, -y_2) \\
@@ -452,18 +436,93 @@ Thus $\psi(P_1+P_1) = \psi(P_1) + \psi(P_1)$.
 \left(
 	\zeta \left( \frac{(y_2-y_1)^2}{(x_2-x_1)^2}-x_1-x_2 \right),
 	\frac{(y_2-y_1)^3}{(x_2-x_1)^3} - \frac{(2x_1+x_2)(y_2-y_1)}{(x_2-x_1)} + y_1
-\right)
+\right) \\
+&= \psi \left(
+	\left(
+		\frac{(y_2-y_1)^2}{(x_2-x_1)^2}-x_1-x_2,
+		\frac{(2x_1+x_2)(y_2-y_1)}{(x_2-x_1)}-\frac{(y_2-y_1)^3}{(x_2-x_1)^3}-y_1
+	\right)
+\right) \\
+&= \psi(P_1+P_2)
 \end{align*}
 
 Thus $\psi(P_1 + P_2) = \psi(P_1) + \psi(P_2)$. Again, we skip $\infty$. Therefore $\psi$ is a homomorphism.
 
-(c) Show that $(x, y) \mapsto (−x, iy)$, is an automorphism of the elliptic curve $y^2 = x^3 + Ax$.
+Let $\psi((X,Y,Z)) = \infty = (0,1,0)$. Then $\zeta X = 0$. $\zeta \neq 0$, so $X = 0$. $-Y = 1$, and $Z = 0$. So $(X,Y,Z) = (0,-1,0)$ which is in the equivalence class of $\infty$. Thus $\ker \psi = \{\infty\}$ and $\psi$ is an automorphism.
 
-\section{Washington 6.1}
-Let E be the curve $y^2 = x^3+1$ over $F_q$, where $q \equiv 2 \mod 3$. By proposition 4.33, $E$ is supersingular. Let $\omega \in F_{q^2}$ be a primitive third root of unity. Note that $\omega \not \in F_q$ since the order of $F_q^\times$ is $q-1$, which is not a multiple of $3$.
+\vskip1ex
 
-Show that the map
-$$\beta: E(\bar F_q) \to E(\bar F_q), ~ (x,y) \mapsto (\omega x, y), ~ \beta(\infty) = \infty$$
-is an isomorphism.
+(c) Show that $(x, y) \mapsto (-x, iy)$, is an automorphism of the elliptic curve $y^2 = x^3 + Ax$.
+
+Let $\tau: (x,y) \mapsto (-x,iy)$.
+
+\begin{align*}
+\tau(P_1)+\tau(P_1) &=
+(-x_1,iy_1) + (-x_1,iy_1) \\
+&= \left(
+	\frac{(3(-x_1)^2)^2}{(2iy_1)^2}-2(-x_1),
+	\frac{3(-x_1)(3(-x_1)^2)}{2iy_1}-\frac{(3(-x_1)^2)^3}{(2iy_1)^3}-iy_1
+\right) \\
+&= \left(
+	\frac{(3x_1^2)^2}{-(2y_1)^2}+2x_1,
+	\frac{-3x_1(3x_1^2)}{2iy_1}-\frac{(3x_1^2)^3}{-i(2y_1)^3}-iy_1
+\right) \\
+&= \left(
+	\frac{(3x_1^2)^2}{-(2y_1)^2}+2x_1,
+	i\frac{3x_1(3x_1^2)}{2y_1}-i\frac{(3x_1^2)^3}{(2y_1)^3}-iy_1
+\right) \\
+&= 
+\left(
+	\frac{(3x_1^2)^2}{-(2y_1)^2}+2x_1,
+	i \left( \frac{3x_1(3x_1^2)}{2y_1}-\frac{(3x_1^2)^3}{(2y_1)^3}-y_1 \right)
+\right) \\
+&= \tau \left(
+	\left(
+		\frac{(3x_1^2)^2}{(2y_1)^2}-2x_1,
+		\frac{3x_1(3x_1^2)}{2y_1}-\frac{(3x_1^2)^3}{(2y_1)^3}-y_1
+	\right)
+\right) \\
+&= \tau(P_1+P_1)
+\end{align*}
+
+Thus $\tau(P_1+P_1) = \tau(P_1)+\tau(P_1)$.
+
+\begin{align*}
+\tau(P_1) + \tau(P_2) &= (-x_1, iy_1) + (-x_2, iy_2) \\
+&= \left(
+	\frac{(iy_2-iy_1)^2}{(-x_2+x_1)^2}+x_1+x_2,
+	\frac{(-2x_1-x_2)(iy_2-iy_1)}{(-x_2+x_1)}-\frac{(iy_2-iy_1)^3}{(-x_2+x_1)^3}-iy_1
+\right) \\
+&= \left(
+	\frac{-(y_2-y_1)^2}{(x_2-x_1)^2}+x_1+x_2,
+	\frac{-i(2x_1x_2)(y_2-y_1)}{-(x_2-x_1)}-\frac{-i(y_2-y_1)^3}{-1(x_2-x_1)^3}-iy_1
+\right) \\
+&= \left(
+	-\frac{(y_2-y_1)^2}{(x_2-x_1)^2}+x_1+x_2,
+	i\left( \frac{(2x_1+x_2)(y_2-y_1)}{(x_2-x_1)}-\frac{(y_2-y_1)^3}{(x_2-x_1)^3}-y_1 \right)	
+\right) \\
+&= \tau \left(
+	\left(
+		\frac{(y_2-y_1)^2}{(x_2-x_1)^2}-x_1-x_2,
+		\frac{(2x_1+x_2)(y_2-y_1)}{(x_2-x_1)}-\frac{(y_2-y_1)^3}{(x_2-x_1)^3}-y_1
+	\right)
+\right) \\
+&= \tau(P_1+P_2)
+\end{align*}
+
+Thus $\tau(P_1+P_2) = \tau(P_1)+\tau(P_2)$.
+Therefore $\tau$ is a homomorphism.
+
+Let $\tau((X,Y,Z)) = \infty = (0,1,0)$.
+Then $X = -0 = 0$, $iY = 1$, and $Z = 0$. $iY = 1$, so $y = \frac{1}{i} = -i$.
+So $(X,Y,Z) = (0, -i, 0)$ which is in the equivalence class of $\infty$.
+Thus $\ker \tau = \{\infty\}$ and $\tau$ is an automorphism.
+
+%\section{Washington 6.1}
+%Let E be the curve $y^2 = x^3+1$ over $F_q$, where $q \equiv 2 \mod 3$. By proposition 4.33, $E$ is supersingular. Let $\omega \in F_{q^2}$ be a primitive third root of unity. Note that $\omega \not \in F_q$ since the order of $F_q^\times$ is $q-1$, which is not a multiple of $3$.
+
+%Show that the map
+%$$\beta: E(\bar F_q) \to E(\bar F_q), ~ (x,y) \mapsto (\omega x, y), ~ \beta(\infty) = \infty$$
+%is an isomorphism.
 
 \end{document}
